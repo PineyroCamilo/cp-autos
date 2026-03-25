@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre Nosotros | CP Autos UY</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root { 
+        --red: #ef233c; 
+        --dark: #1d3557; 
+        --light: #edf2f4;
+        --deep-dark: #0f1c2e;
+    }
+
+    body { 
+        margin: 0; 
+        font-family: 'Inter', sans-serif; 
+        background: #fdfdfd; 
+        color: var(--dark);
+        line-height: 1.8;
+    }
+
+    /* --- NAVBAR --- */
+    .navbar { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 15px 5%; 
+        background: white;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    .navbar img { height: 50px; }
+    .nav-links a { 
+        margin-left: 20px; 
+        text-decoration: none; 
+        color: var(--dark); 
+        font-weight: 600; 
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    /* --- HERO --- */
+    .about-hero {
+        background: linear-gradient(rgba(29, 53, 87, 0.9), rgba(29, 53, 87, 0.9)), 
+                    url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80') center/cover;
+        padding: 100px 5%;
+        text-align: center;
+        color: white;
+    }
+    .about-hero h1 { font-size: clamp(32px, 5vw, 48px); margin-bottom: 20px; }
+    .about-hero p { max-width: 700px; margin: 0 auto; font-size: 18px; opacity: 0.9; font-weight: 300; }
+
+    /* --- CONTENIDO --- */
+    .content-section {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+    .content-section h2 {
+        color: var(--red);
+        font-size: 28px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    .content-section h2::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 60px;
+        height: 3px;
+        background: var(--red);
+    }
+
+    .highlight-box {
+        background: var(--light);
+        padding: 40px;
+        border-radius: 20px;
+        border-left: 5px solid var(--red);
+        margin: 40px 0;
+    }
+
+    /* --- VALORES --- */
+    .grid-valores {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+    .valor-card {
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border: 1px solid #eee;
+    }
+    .valor-card h4 { color: var(--red); margin-top: 0; font-size: 20px; }
+
+    /* --- FOOTER --- */
+    .footer-dark {
+        background-color: var(--dark);
+        color: white;
+        padding: 50px 20px;
+        text-align: center;
+        margin-top: 100px;
+    }
+    .footer-dark a { color: white; text-decoration: none; font-weight: 600; margin: 0 15px; }
+    .copy { margin-top: 25px; font-size: 13px; color: #adb5bd; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+    @media (max-width: 768px) {
+        .about-hero { padding: 60px 5%; }
+        .highlight-box { padding: 25px; }
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="index.html"><img src="logo.png" alt="CP Autos UY"></a>
+    <div class="nav-links">
+        <a href="index.html">Catálogo</a>
+        <a href="https://wa.me/59892984251">Contacto</a>
+    </div>
+</nav>
+
+<header class="about-hero">
+    <h1>Transparencia en cada kilómetro</h1>
+    <p>En el mercado uruguayo, la confianza no se negocia. Conocé quiénes somos y por qué somos tu mejor aliado.</p>
+</header>
+
+<main class="content-section">
+    <h2>Nuestra Misión</h2>
+    <p>
+        CP Autos UY nació con una premisa clara: **el dueño de un vehículo no debería malvender su capital por falta de tiempo o herramientas**. 
+        Sabemos que vender un auto de forma particular en Uruguay puede ser tedioso, y entregarlo en una automotora tradicional muchas veces implica perder dinero frente al valor real de mercado.
+    </p>
+
+    <div class="highlight-box">
+        <h3>¿Qué nos hace diferentes?</h3>
+        <p>
+            No somos simplemente intermediarios. Somos gestores de venta. Nuestro objetivo es que **vos ganes lo máximo posible por tu inversión**. 
+            Nos encargamos de todo el proceso: desde el peritaje y la fotografía profesional, hasta la gestión de consultas y la seguridad en el cierre de la transacción.
+        </p>
+    </div>
+
+    <h2>Cómo trabajamos para vos</h2>
+    <p>
+        Entendemos el mercado local. Sabemos qué busca el comprador uruguayo y cómo posicionar tu vehículo para que se destaque. 
+        Al trabajar con nosotros, te asegurás de que tu auto sea visto por los ojos correctos, eliminando las llamadas improductivas y las ofertas poco serias.
+    </p>
+
+    <div class="grid-valores">
+        <div class="valor-card">
+            <h4>Seguridad Total</h4>
+            <p>Coordinamos las visitas en puntos seguros y filtramos a los interesados para que no tengas que preocuparte por nada.</p>
+        </div>
+        <div class="valor-card">
+            <h4>Máxima Rentabilidad</h4>
+            <p>Nuestra estructura está diseñada para que el valor final que recibís "en mano" sea el más alto del mercado.</p>
+        </div>
+        <div class="valor-card">
+            <h4>Gestoría Ágil</h4>
+            <p>Te acompañamos en toda la documentación para que la transferencia sea rápida, legal y sin vueltas.</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 80px;">
+        <h3>¿Querés vender tu auto hoy mismo?</h3>
+        <p>Sumate a los clientes que ya confiaron en nuestra gestión.</p>
+        <br>
+        <a href="https://wa.me/59892984251" style="background: var(--red); color:white; padding: 18px 40px; text-decoration:none; border-radius: 50px; font-weight: 700; display: inline-block;">Consultar con un Asesor</a>
+    </div>
+</main>
+
+<footer class="footer-dark">
+    <div style="margin-bottom: 20px;">
+        <a href="index.html">Volver al Inicio</a>
+        <a href="https://wa.me/59892984251">WhatsApp</a>
+    </div>
+    <div class="copy">
+        &copy; 2026 CP Autos UY - Montevideo, Uruguay. <br>
+        Profesionalismo y seriedad en el mercado automotor uruguayo.
+    </div>
+</footer>
+
+</body>
+</html>

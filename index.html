@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CP Autos UY | Venta de Usados</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root { 
+        --red: #ef233c; 
+        --red-hover: #d90429;
+        --green: #25D366; 
+        --dark: #2b2d42; 
+        --light: #edf2f4;
+        --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        --glass: rgba(255, 255, 255, 0.8);
+    }
+
+    body { 
+        margin: 0; 
+        font-family: 'Inter', sans-serif; 
+        background: #f8f9fa; 
+        color: var(--dark);
+        scroll-behavior: smooth; 
+        line-height: 1.6;
+    }
+
+    /* --- NAVBAR MODERNA --- */
+    .navbar { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 15px 5%; 
+        background: var(--glass);
+        backdrop-filter: blur(10px); /* Efecto cristal */
+        border-bottom: 1px solid rgba(0,0,0,0.05); 
+        position: sticky; 
+        top: 0; 
+        z-index: 1000; 
+    }
+    .navbar img { height: 50px; transition: 0.3s; }
+    .nav-links a { 
+        margin-left: 20px; 
+        text-decoration: none; 
+        color: var(--dark); 
+        font-weight: 600; 
+        font-size: 14px;
+        cursor: pointer; 
+        transition: 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .nav-links a:hover { color: var(--red); }
+
+    /* --- SECCIONES DE INFORMACIÓN --- */
+    .info-section { 
+        display: none; 
+        padding: 60px 5%; 
+        background: white; 
+        border-bottom: 4px solid var(--red);
+        box-shadow: inset 0 -10px 20px rgba(0,0,0,0.02);
+    }
+    .info-section.active { display: block; animation: slideDown 0.4s ease-out; }
+
+    /* --- HERO REFORZADO --- */
+    .hero { 
+        background: linear-gradient(rgba(43, 45, 66, 0.7), rgba(43, 45, 66, 0.7)), 
+                    url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80') center/cover; 
+        height: 400px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        text-align: center;
+        color: white; 
+        padding: 0 20px;
+    }
+    .hero h1 { 
+        font-size: clamp(28px, 5vw, 48px); 
+        max-width: 800px; 
+        font-weight: 700;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    /* --- CONTENEDOR PRINCIPAL RESPONSIVO --- */
+    .container { 
+        display: flex; 
+        flex-direction: row;
+        gap: 30px; 
+        padding: 40px 5%; 
+        max-width: 1300px; 
+        margin: 0 auto; 
+    }
+
+    /* Sidebar de Filtros */
+    .filters { 
+        width: 260px; 
+        background: white; 
+        padding: 25px; 
+        border-radius: 15px; 
+        height: fit-content; 
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 100px;
+    }
+    .filters h3 { margin-top: 0; font-size: 18px; border-bottom: 2px solid var(--light); padding-bottom: 10px; }
+    
+    details { margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    summary { font-weight: 600; cursor: pointer; padding: 5px 0; outline: none; }
+    
+    .filter-btn { 
+        display: block; 
+        width: 100%; 
+        text-align: left; 
+        background: none; 
+        border: none; 
+        padding: 10px 5px; 
+        cursor: pointer; 
+        color: #666; 
+        transition: 0.2s;
+        font-size: 14px;
+    }
+    .filter-btn:hover { color: var(--red); padding-left: 10px; }
+
+    .main-content { flex: 1; }
+    
+    .search-bar { 
+        width: 100%; 
+        padding: 18px 25px; 
+        border-radius: 50px; 
+        border: 1px solid #ddd; 
+        margin-bottom: 30px; 
+        box-sizing: border-box; 
+        font-size: 16px; 
+        box-shadow: var(--shadow);
+        transition: 0.3s;
+        outline: none;
+    }
+    .search-bar:focus { border-color: var(--red); box-shadow: 0 0 0 4px rgba(239, 35, 60, 0.1); }
+
+    /* --- GRILLA DE AUTOS CON EFECTOS --- */
+    .cars { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+        gap: 25px; 
+    }
+    .car { 
+        background: white; 
+        border-radius: 15px; 
+        overflow: hidden;
+        text-decoration: none; 
+        color: inherit; 
+        display: block; 
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        border: 1px solid #eee;
+    }
+    .car:hover { 
+        transform: translateY(-10px); 
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+    }
+    .car img { width: 100%; height: 200px; object-fit: cover; }
+    .car-info { padding: 20px; }
+    .car-info h3 { margin: 0 0 10px 0; font-size: 18px; color: var(--dark); }
+    .car-info p { margin: 5px 0; color: #777; font-size: 14px; }
+    .price { color: var(--red); font-weight: 700; font-size: 22px; margin-top: 10px !important; }
+.footer-dark {
+        background-color: #1d3557 !important;
+        color: #ffffff !important;
+        padding: 50px 20px !important;
+        margin-top: 50px;
+        text-align: center !important;
+    }
+    .footer-dark a {
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-weight: 600;
+        margin: 0 15px;
+        display: inline-block;
+        transition: 0.3s;
+    }
+    .footer-dark a:hover { color: var(--red) !important; }
+    .footer-dark .copy {
+        margin-top: 25px;
+        font-size: 13px;
+        color: #adb5bd !important;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 20px;
+    }
+
+    /* --- BOTONES Y CALCULADORA --- */
+    .btn-wa { 
+        background: var(--green); 
+        color: white; 
+        padding: 12px 25px; 
+        text-decoration: none; 
+        border-radius: 50px; 
+        display: inline-block; 
+        font-weight: 600; 
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    .btn-wa:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    .calc-box {
+        background: #f8f9fa; 
+        padding: 20px; 
+        border-radius: 12px; 
+        border: 1px solid #eee;
+        margin-top: 20px;
+    }
+
+    /* --- WHATSAPP FLOTANTE --- */
+    .whatsapp-float { 
+        position: fixed; 
+        bottom: 30px; 
+        right: 30px; 
+        background: var(--green); 
+        width: 60px;
+        height: 60px;
+        border-radius: 50%; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2); 
+        z-index: 1000; 
+        transition: 0.3s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1) rotate(10deg); }
+    .whatsapp-float img { width: 32px; height: 32px; }
+
+    /* --- RESPONSIVIDAD (CELULARES) --- */
+    @media (max-width: 768px) {
+        .container { flex-direction: column; padding: 20px; }
+        .filters { width: 100%; position: static; box-sizing: border-box; margin-bottom: 20px; }
+        .navbar { padding: 10px 20px; }
+        .nav-links a { margin-left: 10px; font-size: 12px; }
+        .hero { height: 250px; }
+        .cars { grid-template-columns: 1fr; } /* Un auto por fila en celular */
+    }
+
+    @keyframes slideDown { 
+        from { opacity: 0; transform: translateY(-20px); } 
+        to { opacity: 1; transform: translateY(0); } 
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <img src="logo.png" alt="CP Autos UY">
+    <div class="nav-links">
+        <a onclick="showSection('comprar')">Comprar</a>
+        <a onclick="showSection('vender')">Vender</a>
+        <a href="https://wa.me/59892984251">Contacto</a>
+    </div>
+</nav>
+
+<div id="section-comprar" class="info-section">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2>¿Cómo comprar en CP Autos?</h2>
+        <p>Hacemos que la compra de tu próximo vehículo sea segura y transparente:</p>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 15px;">✅ <strong>Busca:</strong> Elegís el auto que más te guste de nuestro catálogo.</li>
+            <li style="margin-bottom: 15px;">✅ <strong>Lo ves:</strong> Coordinamos una visita en nuestro punto de encuentro seguro.</li>
+            <li style="margin-bottom: 15px;">✅ <strong>Chequeas:</strong> Revisión mecánica permitida.</li>
+        </ul>
+        <button onclick="closeSections()" style="padding:10px 20px; border-radius:5px; border:1px solid #ccc; cursor:pointer; background:white;">Cerrar ✕</button>
+    </div>
+</div>
+
+<div id="section-vender" class="info-section">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2>Vende tu auto sin estrés</h2>
+        <p>Publicamos en los portales más importantes y gestionamos todos los interesados.</p>
+        
+        <div class="calc-box">
+            <h4>Calculadora de Ganancia</h4>
+            <p style="font-size: 13px; color: #666;">Ingresa el precio de venta pretendido:</p>
+            <input type="number" id="inputPrecio" placeholder="Precio en USD (Ej: 15000)" oninput="calcular()" 
+                   style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
+            <p style="font-size: 18px; margin-top:15px;">Tú recibes libre: <strong id="txtTotal" style="color:var(--red)">$ 0</strong></p>
+        </div>
+        <br>
+        <a href="https://wa.me/59892984251?text=Hola, quiero vender mi auto" class="btn-wa">Hablar con un asesor</a>
+        <button onclick="closeSections()" style="padding:12px 20px; border:none; cursor:pointer; margin-left:10px; background:none; text-decoration: underline;">Volver</button>
+    </div>
+</div>
+
+<header class="hero">
+    <h1>Vendemos tu auto rápido y sin complicaciones</h1>
+</header>
+
+<div class="container">
+    <aside class="filters">
+        <h3>Filtros Rápidos</h3>
+
+        <details>
+            <summary>Marcas</summary>
+           <button class="filter-btn" onclick="filterBy('Audi')">Audi</button>
+<button class="filter-btn" onclick="filterBy('BAIC')">BAIC</button>
+<button class="filter-btn" onclick="filterBy('Bestune')">Bestune</button>
+<button class="filter-btn" onclick="filterBy('BMW')">BMW</button>
+<button class="filter-btn" onclick="filterBy('BYD')">BYD</button>
+<button class="filter-btn" onclick="filterBy('Changan')">Changan</button>
+<button class="filter-btn" onclick="filterBy('Chery')">Chery</button>
+<button class="filter-btn" onclick="filterBy('Chevrolet')">Chevrolet</button>
+<button class="filter-btn" onclick="filterBy('Citroën')">Citroën</button>
+<button class="filter-btn" onclick="filterBy('DFSK')">DFSK</button>
+<button class="filter-btn" onclick="filterBy('Dongfeng')">Dongfeng</button>
+<button class="filter-btn" onclick="filterBy('FAW')">FAW</button>
+<button class="filter-btn" onclick="filterBy('Fiat')">Fiat</button>
+<button class="filter-btn" onclick="filterBy('Ford')">Ford</button>
+<button class="filter-btn" onclick="filterBy('Foton')">Foton</button>
+<button class="filter-btn" onclick="filterBy('GAC')">GAC</button>
+<button class="filter-btn" onclick="filterBy('Geely')">Geely</button>
+<button class="filter-btn" onclick="filterBy('Great Wall')">Great Wall</button>
+<button class="filter-btn" onclick="filterBy('Honda')">Honda</button>
+<button class="filter-btn" onclick="filterBy('Hyundai')">Hyundai</button>
+<button class="filter-btn" onclick="filterBy('JAC')">JAC</button>
+<button class="filter-btn" onclick="filterBy('Jaguar')">Jaguar</button>
+<button class="filter-btn" onclick="filterBy('Jetour')">Jetour</button>
+<button class="filter-btn" onclick="filterBy('JMC')">JMC</button>
+<button class="filter-btn" onclick="filterBy('Kia')">Kia</button>
+<button class="filter-btn" onclick="filterBy('Lexus')">Lexus</button>
+<button class="filter-btn" onclick="filterBy('Lifan')">Lifan</button>
+<button class="filter-btn" onclick="filterBy('Maserati')">Maserati</button>
+<button class="filter-btn" onclick="filterBy('Mazda')">Mazda</button>
+<button class="filter-btn" onclick="filterBy('Mercedes-Benz')">Mercedes-Benz</button>
+<button class="filter-btn" onclick="filterBy('MG')">MG</button>
+<button class="filter-btn" onclick="filterBy('Mini')">Mini</button>
+<button class="filter-btn" onclick="filterBy('Mitsubishi')">Mitsubishi</button>
+<button class="filter-btn" onclick="filterBy('Nissan')">Nissan</button>
+<button class="filter-btn" onclick="filterBy('Peugeot')">Peugeot</button>
+<button class="filter-btn" onclick="filterBy('Porsche')">Porsche</button>
+<button class="filter-btn" onclick="filterBy('Renault')">Renault</button>
+<button class="filter-btn" onclick="filterBy('Seat')">Seat</button>
+<button class="filter-btn" onclick="filterBy('Subaru')">Subaru</button>
+<button class="filter-btn" onclick="filterBy('Suzuki')">Suzuki</button>
+<button class="filter-btn" onclick="filterBy('Toyota')">Toyota</button>
+<button class="filter-btn" onclick="filterBy('Volkswagen')">Volkswagen</button>
+        </details>
+
+        <details>
+            <summary>Combustible</summary>
+            <button class="filter-btn" onclick="filterBy('Nafta')">Nafta</button>
+<button class="filter-btn" onclick="filterBy('Diésel')">Diésel</button>
+<button class="filter-btn" onclick="filterBy('Eléctrico')">Eléctrico</button>
+<button class="filter-btn" onclick="filterBy('Híbrido')">Híbrido</button>
+        </details>
+
+        <div style="margin-top:20px;">
+            <label style="font-weight: 600; font-size: 14px;">Precio Máximo: USD <span id="priceValue">50000</span></label>
+            <input type="range" id="priceRange" min="3000" max="20000" step="500" value="50000" oninput="applyFilters()" 
+                   style="width: 100%; margin-top:10px; accent-color: var(--red);">
+        </div>
+
+        <button onclick="resetFilters()" style="color:var(--red); font-weight:bold; background:none; border:none; cursor:pointer; padding:20px 0 0 0; width:100%; text-align:center;">
+            Limpiar Filtros
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Busca por marca, modelo o año..." onkeyup="applyFilters()">
+        
+        <div class="cars" id="carContainer">
+            <a href="auto.html" class="car">
+                <img src="fawn5.png" alt="FAW New N5">
+                <div class="car-info">
+                    <h3>FAW New N5 FULL</h3>
+                    <p>2017 | 179.000 km</p>
+                    <p>Nafta | Manual</p>
+                    <p class="price">$6.800</p>
+                </div>
+            </a>
+            
+            </div>
+
+        <div id="noResults" style="display:none; text-align:center; padding:60px 20px; background:white; border-radius:15px; box-shadow: var(--shadow);">
+            <p style="font-size:24px; font-weight:700;">No encontramos ese vehículo...</p>
+            <p style="color:#666; margin-bottom:25px;">Pero podemos buscarlo por ti en nuestra red de contactos.</p>
+            <a href="https://wa.me/59892984251" class="btn-wa">Consultar por WhatsApp</a>
+        </div>
+    </main>
+</div>
+<footer class="footer-dark">
+    <div style="margin-bottom: 20px;">
+        <a href="https://wa.me/59892984251">Contáctanos</a>
+        <a href="nosotros.html">Sobre Nosotros</a>
+    </div>
+    <div class="copy">
+        &copy; 2026 CP Autos UY - Montevideo, Uruguay. <br>
+        Todos los derechos reservados.
+    </div>
+</footer>
+<a class="whatsapp-float" href="https://wa.me/59892984251" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</a>
+
+<script>
+    // FUNCIONES DE SECCIONES (Lógica original intacta)
+    function showSection(id) {
+        closeSections();
+        document.getElementById('section-' + id).classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    function closeSections() {
+        document.querySelectorAll('.info-section').forEach(s => s.classList.remove('active'));
+    }
+
+    // LÓGICA DE FILTROS (Mantenida como pediste)
+    function applyFilters() {
+        const text = document.getElementById("searchInput").value.toLowerCase();
+        const maxPrice = parseInt(document.getElementById("priceRange").value);
+        document.getElementById("priceValue").innerText = maxPrice;
+
+        const carContainer = document.getElementById("carContainer");
+        const noResults = document.getElementById("noResults");
+        let hasResults = false;
+
+        document.querySelectorAll(".car").forEach(car => {
+            const priceText = car.querySelector(".price").innerText.replace(/\D/g, "");
+            const price = parseInt(priceText);
+            const matchesText = car.textContent.toLowerCase().includes(text);
+            const matchesPrice = price <= maxPrice;
+
+            if (matchesText && matchesPrice) {
+                car.style.display = "block";
+                hasResults = true;
+            } else {
+                car.style.display = "none";
+            }
+        });
+
+        noResults.style.display = hasResults ? "none" : "block";
+        carContainer.style.display = hasResults ? "grid" : "none";
+    }
+
+    function filterBy(brand) {
+        document.getElementById("searchInput").value = brand;
+        applyFilters();
+    }
+
+    function resetFilters() {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("priceRange").value = 20000;
+        applyFilters();
+    }
+
+    // CALCULADORA (Lógica intacta)
+    function calcular() {
+        const p = document.getElementById("inputPrecio").value;
+        const total = p > 0 ? p - (p * 0.04 * 1.22) : 0;
+        document.getElementById("txtTotal").innerText = "$ " + Math.round(total).toLocaleString();
+    }
+
+</script>
+
+</body>
+</html>

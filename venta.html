@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vender mi Auto | CP Autos UY</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root { 
+        --red: #ef233c; 
+        --red-hover: #d90429;
+        --green: #25D366; 
+        --dark: #2b2d42; 
+        --light: #edf2f4;
+        --shadow: 0 15px 35px rgba(0,0,0,0.1);
+        --glass: rgba(255, 255, 255, 0.9);
+    }
+
+    body { 
+        margin: 0; 
+        font-family: 'Inter', sans-serif; 
+        background: #f4f6f9; 
+        color: var(--dark);
+        line-height: 1.6;
+    }
+
+    /* --- NAVBAR --- */
+    .navbar { 
+        display: flex; justify-content: space-between; align-items: center; 
+        padding: 15px 5%; background: rgba(255,255,255,0.8);
+        backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); 
+        position: sticky; top: 0; z-index: 1000; 
+    }
+    .navbar img { height: 50px; }
+    .nav-links a { 
+        margin-left: 20px; text-decoration: none; color: var(--dark); 
+        font-weight: 600; font-size: 14px; text-transform: uppercase; transition: 0.3s;
+    }
+    .nav-links a:hover { color: var(--red); }
+
+    /* --- HERO --- */
+    .hero-venta {
+        background: linear-gradient(135deg, var(--dark) 0%, #1a1b26 100%);
+        color: white; padding: 60px 20px; text-align: center;
+        position: relative; overflow: hidden;
+    }
+    .hero-venta h1 { font-size: clamp(30px, 5vw, 50px); margin: 0; font-weight: 700; }
+    .hero-venta p { color: #a0aabf; font-size: 18px; margin-top: 10px; }
+
+    /* --- CONTENEDOR PRINCIPAL (GRID) --- */
+    .dashboard {
+        max-width: 1200px; margin: -40px auto 50px; padding: 0 20px;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+        position: relative; z-index: 10;
+    }
+
+    /* --- TARJETAS CRISTAL (ESTÉTICA MODERNA) --- */
+    .glass-card {
+        background: white; border-radius: 20px; padding: 40px;
+        box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.4);
+        position: relative; overflow: hidden;
+    }
+
+    .glass-card h2 { margin-top: 0; font-size: 24px; color: var(--dark); display: flex; align-items: center; gap: 10px; }
+    .badge { background: rgba(239, 35, 60, 0.1); color: var(--red); padding: 5px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; }
+
+    /* --- FORMULARIOS ESTÉTICOS --- */
+    .input-group { margin-bottom: 20px; position: relative; }
+    .input-group label { display: block; font-size: 13px; font-weight: 600; color: #666; margin-bottom: 8px; text-transform: uppercase; }
+    .modern-input {
+        width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #e2e8f0;
+        background: #f8fafc; font-size: 16px; font-family: 'Inter', sans-serif;
+        box-sizing: border-box; transition: all 0.3s; outline: none;
+    }
+    .modern-input:focus { border-color: var(--red); background: white; box-shadow: 0 0 0 4px rgba(239, 35, 60, 0.1); }
+    
+    /* --- BOTONES ANIMADOS --- */
+    .btn-primary {
+        width: 100%; padding: 18px; border: none; border-radius: 12px;
+        background: var(--red); color: white; font-size: 16px; font-weight: 700;
+        cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(239, 35, 60, 0.3); }
+
+    /* --- ANIMACIÓN DE CARGA (EL TRUCO DE LA TASACIÓN) --- */
+    .loader-container { display: none; text-align: center; padding: 40px 0; }
+    .spinner {
+        width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid var(--red);
+        border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;
+    }
+    .loading-text { font-weight: 600; color: #666; animation: pulse 1.5s infinite; }
+
+    /* --- RESULTADO DE TASACIÓN --- */
+    .result-box {
+        display: none; text-align: center; animation: fadeIn 0.5s ease-out;
+    }
+    .price-range { font-size: 32px; font-weight: 700; color: var(--dark); margin: 15px 0; }
+    .price-range span { color: var(--red); }
+    
+    .btn-wa {
+        background: var(--green); color: white; padding: 15px 25px; text-decoration: none;
+        border-radius: 50px; display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+        margin-top: 20px; transition: 0.3s; width: 100%; justify-content: center; box-sizing: border-box;
+    }
+    .btn-wa:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
+
+    /* --- CALCULADORA DE COMISIÓN --- */
+    .calc-result {
+        background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 15px;
+        padding: 25px; text-align: center; margin-top: 20px; transition: 0.3s;
+    }
+    .calc-result.active { border-color: var(--green); background: rgba(37, 211, 102, 0.05); }
+    .calc-total { font-size: 38px; font-weight: 700; color: var(--green); margin: 10px 0 0 0; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        .dashboard { grid-template-columns: 1fr; margin-top: -20px; }
+        .hero-venta { padding: 40px 20px 60px; }
+    }
+
+    /* Keyframes */
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <img src="logo.png" alt="CP Autos UY">
+    <div class="nav-links">
+        <a href="index.html">← Volver al Catálogo</a>
+    </div>
+</nav>
+
+<header class="hero-venta">
+    <h1>Cotizá y vendé hoy mismo</h1>
+    <p>Tecnología, transparencia y la comisión más clara del mercado.</p>
+</header>
+
+<div class="dashboard">
+    <div class="glass-card">
+        <h2>¿Cuánto vale tu auto? <span class="badge">Inteligencia de Mercado</span></h2>
+        <p style="color: #666; font-size: 14px; margin-bottom: 25px;">Ingresá los datos de tu vehículo y obtené un rango estimado de venta al público al instante.</p>
+
+        <form id="formTasador" onsubmit="iniciarTasacion(event)">
+            <div class="input-group">
+                <label>Marca</label>
+                <select id="tasMarca" class="modern-input" required>
+                    <option value="" disabled selected>Seleccioná una marca...</option>
+                    <option value="Audi">Audi</option>
+                    <option value="BMW">BMW</option>
+                    <option value="BYD">BYD</option>
+                    <option value="Changan">Changan</option>
+                    <option value="Chery">Chery</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="Citroën">Citroën</option>
+                    <option value="DFSK">DFSK</option>
+                    <option value="Dongfeng">Dongfeng</option>
+                    <option value="Fiat">Fiat</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Geely">Geely</option>
+                    <option value="Great Wall">Great Wall</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="JAC">JAC</option>
+                    <option value="Jetour">Jetour</option>
+                    <option value="JMC">JMC</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Lifan">Lifan</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="MG">MG</option>
+                    <option value="Mini">Mini</option>
+                    <option value="Mitsubishi">Mitsubishi</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Peugeot">Peugeot</option>
+                    <option value="Porsche">Porsche</option>
+                    <option value="Renault">Renault</option>
+                    <option value="Seat">Seat</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Suzuki">Suzuki</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Volvo">Volvo</option>
+                    <option value="Otra">Otra marca</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>Modelo y Versión</label>
+                <input type="text" id="tasModelo" class="modern-input" placeholder="Ej: Onix 1.0 LTZ / 208 1.6 Active" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="input-group">
+                    <label>Año</label>
+                    <input type="number" id="tasAnio" class="modern-input" placeholder="Ej: 2018" min="1990" max="2026" required>
+                </div>
+                <div class="input-group">
+                    <label>Kilómetros</label>
+                    <input type="number" id="tasKm" class="modern-input" placeholder="Ej: 65000" min="0" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Calcular Valor Estimado</button>
+        </form>
+
+        <div id="pantallaCarga" class="loader-container">
+            <div class="spinner"></div>
+            <div id="textoCarga" class="loading-text">Analizando mercado actual...</div>
+        </div>
+
+        <div id="pantallaResultado" class="result-box">
+            <h3 style="color: var(--dark); margin:0;">El valor estimado es de:</h3>
+            <div class="price-range" id="resultadoRango"><span>USD 0</span> - <span>USD 0</span></div>
+            
+            <p id="nivelConfianzaHTML" style="font-size: 0.9em; color: gray; margin-bottom: 5px;"></p>
+            <p id="insightHTML" style="font-weight: bold; color: #d35400; font-size: 14px; margin-bottom: 15px;"></p>
+            
+            <p style="color: #666; font-size: 14px; background: #f8fafc; padding: 10px; border-radius: 8px;">
+                Este es un valor de referencia algorítmico. Para darte el precio final exacto necesitamos ver el estado de la unidad.
+            </p>
+            
+            <a id="btnWhatsappTasacion" href="#" class="btn-wa" target="_blank">
+                📱 Agendar valuación exacta
+            </a>
+            <button onclick="reiniciarTasador()" style="background:none; border:none; color:var(--red); font-weight:600; margin-top:15px; cursor:pointer; text-decoration:underline;">
+                Cotizar otro vehículo
+            </button>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Tus números claros <span class="badge">Comisión Fija</span></h2>
+        <p style="color: #666; font-size: 14px; margin-bottom: 25px;">En CP Autos UY cobramos un <strong>4% + IVA</strong> de comisión solo si vendemos tu auto. Sin letras chicas.</p>
+
+        <div class="input-group">
+            <label>Precio de Venta (USD)</label>
+            <input type="number" id="inputPrecio" class="modern-input" placeholder="Ingresá a cuánto querés venderlo" oninput="calcularGanancia()">
+        </div>
+
+        <div class="calc-result" id="cajaResultado">
+            <span style="font-weight: 600; color: #64748b; text-transform: uppercase; font-size: 13px;">Tú recibes libre de gastos</span>
+            <div class="calc-total" id="txtTotal">USD 0</div>
+        </div>
+
+        <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+            <h4 style="margin: 0 0 15px 0; color: var(--dark);">¿Qué incluye nuestro servicio?</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #555;">
+                <li style="margin-bottom: 10px;">📸 Fotos de calidad que hacen destacar tu auto.</li>
+                <li style="margin-bottom: 10px;">📢 Publicación optimizada en MercadoLibre y redes.</li>
+                <li style="margin-bottom: 10px;">💬 Nos encargamos de todos los mensajes y consultas.</li>
+                <li style="margin-bottom: 10px;">🤝 Filtramos interesados: solo tratás con compradores reales.</li>
+                <li style="margin-bottom: 10px;">📅 Coordinamos y mostramos el auto por vos.</li>
+                <li style="margin-bottom: 10px;">💰 Negociamos para conseguir el mejor precio posible.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* --- LÓGICA DE LA CALCULADORA DE GANANCIA --- */
+    function calcularGanancia() {
+        const input = document.getElementById("inputPrecio").value;
+        const caja = document.getElementById("cajaResultado");
+        const txtTotal = document.getElementById("txtTotal");
+        
+        if (input > 0) {
+            const total = input - (input * 0.04 * 1.22);
+            txtTotal.innerText = "USD " + Math.round(total).toLocaleString('es-UY');
+            caja.classList.add('active');
+        } else {
+            txtTotal.innerText = "USD 0";
+            caja.classList.remove('active');
+        }
+    }
+
+    /* --- LÓGICA DEL TASADOR INTERACTIVO --- */
+    function iniciarTasacion(event) {
+        event.preventDefault(); 
+        
+        document.getElementById("formTasador").style.display = "none";
+        document.getElementById("pantallaCarga").style.display = "block";
+        document.getElementById("pantallaResultado").style.display = "none";
+        
+        const textos = ["Analizando mercado actual...", "Evaluando historial del modelo...", "Ajustando por nivel de equipamiento...", "Calculando factores mecánicos...", "Generando reporte..."];
+        let i = 0;
+        const intervalo = setInterval(() => {
+            i++;
+            if (i < textos.length) {
+                document.getElementById("textoCarga").innerText = textos[i];
+            }
+        }, 700);
+
+        setTimeout(() => {
+            clearInterval(intervalo);
+            mostrarResultado();
+        }, 3500);
+    }
+
+    /* --- REINICIAR FORMULARIO --- */
+    function reiniciarTasador() {
+        document.getElementById("formTasador").reset();
+        document.getElementById("pantallaResultado").style.display = "none";
+        document.getElementById("formTasador").style.display = "block";
+        document.getElementById("textoCarga").innerText = "Analizando mercado actual...";
+    }
+
+    /* --- EL CEREBRO DE TASACIÓN PROFESIONAL CP AUTOS UY --- */
+    const MERCADO_UY = {
+        marcas: {
+            "Audi": { retencion: 0.88, repuestos: 0.85, seg: "Premium" },
+            "BMW": { retencion: 0.89, repuestos: 0.85, seg: "Premium" },
+            "BYD": { retencion: 0.95, repuestos: 0.95, seg: "Generalista" },
+            "Changan": { retencion: 0.88, repuestos: 0.90, seg: "Generalista" },
+            "Chery": { retencion: 0.87, repuestos: 0.92, seg: "Entrada" },
+            "Chevrolet": { retencion: 0.96, repuestos: 1.05, seg: "Generalista" },
+            "Citroën": { retencion: 0.89, repuestos: 0.92, seg: "Generalista" },
+            "Fiat": { retencion: 0.94, repuestos: 1.05, seg: "Generalista" },
+            "Ford": { retencion: 0.92, repuestos: 0.95, seg: "Generalista" },
+            "Honda": { retencion: 0.96, repuestos: 0.95, seg: "SemiPremium" },
+            "Hyundai": { retencion: 0.95, repuestos: 1.0, seg: "Generalista" },
+            "JAC": { retencion: 0.88, repuestos: 0.90, seg: "Generalista" },
+            "Jeep": { retencion: 0.92, repuestos: 0.90, seg: "SemiPremium" },
+            "Jetour": { retencion: 0.89, repuestos: 0.90, seg: "Generalista" },
+            "Kia": { retencion: 0.95, repuestos: 1.0, seg: "Generalista" },
+            "Mazda": { retencion: 0.94, repuestos: 0.90, seg: "SemiPremium" },
+            "Mercedes-Benz": { retencion: 0.90, repuestos: 0.85, seg: "Premium" },
+            "Mitsubishi": { retencion: 0.94, repuestos: 0.90, seg: "SemiPremium" },
+            "Nissan": { retencion: 0.95, repuestos: 1.0, seg: "Generalista" },
+            "Peugeot": { retencion: 0.90, repuestos: 0.92, seg: "Generalista" },
+            "Renault": { retencion: 0.92, repuestos: 1.0, seg: "Generalista" },
+            "Subaru": { retencion: 0.92, repuestos: 0.85, seg: "SemiPremium" },
+            "Suzuki": { retencion: 0.97, repuestos: 1.05, seg: "Generalista" },
+            "Toyota": { retencion: 0.98, repuestos: 1.05, seg: "SemiPremium" },
+            "Volkswagen": { retencion: 0.96, repuestos: 1.05, seg: "Generalista" },
+            "Volvo": { retencion: 0.89, repuestos: 0.85, seg: "Premium" }
+        },
+        segmentosBase: {
+            "Entrada": { precio: 15500, piso: 5500 },
+            "Generalista": { precio: 25000, piso: 7500 },
+            "SemiPremium": { precio: 40000, piso: 11000 },
+            "Premium": { precio: 70000, piso: 15000 },
+            "Elite": { precio: 140000, piso: 30000 }
+        },
+        modelos: {
+            "spark": { base: 14000, liquidez: 1.10 }, "celta": { base: 13500, liquidez: 1.15 }, "corsa": { base: 14000, liquidez: 1.15 },
+            "classic": { base: 13500, liquidez: 1.15 }, "onix": { base: 21500, liquidez: 1.20 }, "prisma": { base: 20000, liquidez: 1.15 },
+            "joy": { base: 17000, liquidez: 1.15 }, "tracker": { base: 28000, liquidez: 1.15 }, "cruze": { base: 32000, liquidez: 1.05 },
+            "montana": { base: 23000, liquidez: 1.10 }, "s10": { base: 52000, liquidez: 1.10 }, "equinox": { base: 42000, liquidez: 0.95 },
+            "up": { base: 18500, liquidez: 1.25 }, "gol": { base: 19000, liquidez: 1.20 }, "polo": { base: 24000, liquidez: 1.15 },
+            "virtus": { base: 26000, liquidez: 1.10 }, "nivus": { base: 31000, liquidez: 1.15 }, "t-cross": { base: 33000, liquidez: 1.10 },
+            "taos": { base: 41000, liquidez: 1.05 }, "tiguan": { base: 55000, liquidez: 0.95 }, "vento": { base: 40000, liquidez: 0.95 },
+            "amarok": { base: 60000, liquidez: 1.10 }, "saveiro": { base: 21000, liquidez: 1.15 },
+            "alto": { base: 14000, liquidez: 1.20 }, "celerio": { base: 16500, liquidez: 1.20 }, "swift": { base: 21500, liquidez: 1.18 },
+            "baleno": { base: 24000, liquidez: 1.10 }, "dzire": { base: 20000, liquidez: 1.10 }, "ignis": { base: 22000, liquidez: 1.10 },
+            "vitara": { base: 32000, liquidez: 1.05 },
+            "mobi": { base: 15500, liquidez: 1.15 }, "uno": { base: 16000, liquidez: 1.15 }, "argo": { base: 21000, liquidez: 1.10 },
+            "cronos": { base: 22000, liquidez: 1.10 }, "pulse": { base: 27000, liquidez: 1.10 }, "fastback": { base: 32000, liquidez: 1.05 },
+            "strada": { base: 21000, liquidez: 1.20 }, "toro": { base: 35000, liquidez: 1.10 }, "fiorino": { base: 18000, liquidez: 1.20 },
+            "206": { base: 15000, liquidez: 1.05 }, "207": { base: 16000, liquidez: 1.05 }, "208": { base: 24000, liquidez: 1.05 },
+            "308": { base: 29000, liquidez: 0.95 }, "2008": { base: 31000, liquidez: 1.0 }, "3008": { base: 48000, liquidez: 0.90 },
+            "partner": { base: 20000, liquidez: 1.15 },
+            "kwid": { base: 15500, liquidez: 1.15 }, "clio": { base: 16000, liquidez: 1.10 }, "sandero": { base: 20000, liquidez: 1.10 },
+            "stepway": { base: 23000, liquidez: 1.05 }, "logan": { base: 19000, liquidez: 1.10 }, "duster": { base: 28000, liquidez: 1.05 },
+            "oroch": { base: 27000, liquidez: 1.10 }, "kangoo": { base: 22000, liquidez: 1.15 },
+            "etios": { base: 21000, liquidez: 1.20 }, "yaris": { base: 26000, liquidez: 1.15 }, "corolla cross": { base: 42000, liquidez: 1.15 },
+            "corolla": { base: 36000, liquidez: 1.20 }, "hilux": { base: 62000, liquidez: 1.30 }, "sw4": { base: 85000, liquidez: 1.05 },
+            "rav4": { base: 60000, liquidez: 1.05 },
+            "march": { base: 18000, liquidez: 1.10 }, "versa": { base: 25000, liquidez: 1.10 }, "sentra": { base: 35000, liquidez: 1.0 },
+            "kicks": { base: 31000, liquidez: 1.15 }, "frontier": { base: 55000, liquidez: 1.05 },
+            "seagull": { base: 22000, liquidez: 1.15 }, "dolphin": { base: 33000, liquidez: 1.10 }, "yuan plus": { base: 42000, liquidez: 1.05 },
+            "song plus": { base: 50000, liquidez: 1.05 },
+            "a1": { base: 35000, liquidez: 0.95 }, "a3": { base: 48000, liquidez: 0.95 }, "a4": { base: 65000, liquidez: 0.85 },
+            "serie 1": { base: 45000, liquidez: 0.95 }, "serie 3": { base: 68000, liquidez: 0.85 }, "x1": { base: 55000, liquidez: 0.90 }
+        },
+        versiones: [
+            { id: ["ls", "joy", "std", "base", "authentic", "like", "gl", "pop"], factor: 0.90 }, 
+            { id: ["lt", "trend", "active", "feel", "xl", "zen", "evolution", "drive"], factor: 1.0 }, 
+            { id: ["ltz", "highline", "premier", "exclusive", "shine", "glx", "xle", "allure", "intense", "volcano", "freedom", "ambition"], factor: 1.10 }, 
+            { id: ["rs", "gti", "gts", "sport", "n-line", "gr-sport", "gt", "v6", "s-line", "m-sport", "r-line"], factor: 1.20 } 
+        ],
+        motores: [
+            { id: ["1.2"], marcas: ["Peugeot", "Citroën"], factor: 0.82 },
+            { id: ["1.6"], marcas: ["Peugeot", "Citroën"], factor: 1.05 },
+            { id: ["tsi", "tfsi", "200 tsi", "250 tsi", "up! tsi"], marcas: ["Volkswagen", "Audi"], factor: 1.08 },
+            { id: ["hybrid", "hibrido", "dm-i", "hev"], marcas: ["Toyota", "BYD", "Hyundai", "Ford"], factor: 1.12 },
+            { id: ["ev", "electrico"], marcas: ["BYD", "JAC", "Nissan"], factor: 1.08 },
+            { id: ["tdi", "diesel"], marcas: ["Volkswagen", "Toyota", "Chevrolet", "Ford"], factor: 1.15 }
+        ]
+    };
+
+    function mostrarResultado() {
+        const marcaStr = document.getElementById("tasMarca").value.trim();
+        const modeloStr = document.getElementById("tasModelo").value.toLowerCase().trim();
+        const anioInput = document.getElementById("tasAnio").value;
+        const kmInput = document.getElementById("tasKm").value;
+        const ANIO_ACTUAL = 2026;
+
+        const anio = parseInt(anioInput);
+        const km = parseInt(kmInput);
+
+        if (!marcaStr || !modeloStr) {
+            alert("Por favor ingresá la marca y el modelo.");
+            return;
+        }
+        if (isNaN(anio) || anio < 1980 || anio > ANIO_ACTUAL + 1) {
+            alert(`Año inválido. Ingresá un año entre 1980 y ${ANIO_ACTUAL + 1}.`);
+            return;
+        }
+        if (isNaN(km) || km < 0 || km > 1000000) {
+            alert("Kilometraje inválido. Ingresá un valor real sin puntos ni comas.");
+            return;
+        }
+
+        const marcaKey = Object.keys(MERCADO_UY.marcas).find(k => k.toLowerCase() === marcaStr.toLowerCase()) || null;
+        const confMarca = marcaKey ? MERCADO_UY.marcas[marcaKey] : { retencion: 0.90, repuestos: 0.95, seg: "Generalista" };
+        const marcaOficial = marcaKey || marcaStr; 
+
+        let valorBase0km = MERCADO_UY.segmentosBase[confMarca.seg].precio;
+        let factorLiquidez = 1.0;
+
+        const modelosKeys = Object.keys(MERCADO_UY.modelos).sort((a, b) => b.length - a.length);
+        let modeloReconocido = false;
+
+        for (const key of modelosKeys) {
+            const regex = new RegExp(`\\b${key}\\b`, 'i');
+            if (regex.test(modeloStr)) {
+                valorBase0km = MERCADO_UY.modelos[key].base;
+                factorLiquidez = MERCADO_UY.modelos[key].liquidez;
+                modeloReconocido = true;
+                break;
+            }
+        }
+
+        let nivelConfianza = "Media";
+        if (modeloReconocido && marcaKey) {
+            nivelConfianza = "Alta";
+        } else if (!modeloReconocido) {
+            nivelConfianza = "Baja";
+        }
+
+        let factorVersion = 1.0;
+        for (const ver of MERCADO_UY.versiones) {
+            if (ver.id.some(keyword => new RegExp(`\\b${keyword}\\b`, 'i').test(modeloStr))) {
+                factorVersion = Math.max(factorVersion, ver.factor);
+            }
+        }
+
+        let factorMotor = 1.0;
+        if (marcaKey) {
+            for (const mot of MERCADO_UY.motores) {
+                if (mot.marcas.includes(marcaKey) && mot.id.some(keyword => new RegExp(`\\b${keyword}\\b`, 'i').test(modeloStr))) {
+                    factorMotor = mot.factor;
+                    break;
+                }
+            }
+        }
+
+        let multiplicadorTotal = factorVersion * factorMotor * factorLiquidez * confMarca.repuestos;
+        
+        if (multiplicadorTotal > 1.35) multiplicadorTotal = 1.35;
+        if (multiplicadorTotal < 0.70) multiplicadorTotal = 0.70;
+
+        let precio0kmCalculado = valorBase0km * multiplicadorTotal;
+
+        const antiguedad = Math.max(0, ANIO_ACTUAL - anio);
+        let factorAntiguedad = 1.0;
+
+        if (antiguedad === 0) {
+            factorAntiguedad = 0.90; 
+        } else {
+            factorAntiguedad = Math.pow(confMarca.retencion, antiguedad);
+            if (antiguedad > 6) {
+                factorAntiguedad = Math.pow(confMarca.retencion, 6) * Math.pow(0.985, antiguedad - 6);
+            }
+        }
+
+        let precioCalculado = precio0kmCalculado * factorAntiguedad;
+
+        const kmAnualesPromedio = 14000;
+        const kmEsperados = antiguedad * kmAnualesPromedio;
+        
+        if (antiguedad > 1) { 
+            if (km < kmEsperados * 0.4 && km > 0) {
+                precioCalculado *= 1.08; 
+            } else if (km > kmEsperados * 1.5 || km > 200000) {
+                precioCalculado *= 0.85; 
+            }
+        }
+
+        let insight = "";
+        if (factorLiquidez > 1.15) {
+            insight = "🔥 Este modelo se vende muy rápido en Uruguay.";
+        } else if (factorLiquidez < 0.95) {
+            insight = "📉 Este modelo puede demorar más en venderse.";
+        }
+        if (km < kmEsperados * 0.5 && antiguedad > 2) {
+            insight += " 🚗 Kilometraje bajo suma valor.";
+        }
+
+        const miPiso = MERCADO_UY.segmentosBase[confMarca.seg].piso;
+        if (precioCalculado < miPiso) precioCalculado = miPiso;
+
+        let techoMaximo = precio0kmCalculado * 1.05; 
+        if (precioCalculado > techoMaximo) precioCalculado = techoMaximo;
+        
+        if (precioCalculado > 120000) precioCalculado = 120000;
+
+        let min = Math.round((precioCalculado * 0.94) / 100) * 100;
+        let max = Math.round((precioCalculado * 1.06) / 100) * 100;
+
+        console.log("📊 [Analytics CP Autos]:", {
+            marca: marcaOficial,
+            modelo: modeloStr,
+            precioFinalEstimado: Math.round(precioCalculado),
+            liquidez: factorLiquidez,
+            version: factorVersion,
+            confianza: nivelConfianza
+        });
+
+        try {
+            document.getElementById("pantallaCarga").style.display = "none";
+            document.getElementById("pantallaResultado").style.display = "block";
+            document.getElementById("resultadoRango").innerHTML = `<span>USD ${min.toLocaleString('es-UY')}</span> - <span>USD ${max.toLocaleString('es-UY')}</span>`;
+
+            if(document.getElementById("nivelConfianzaHTML")) {
+                document.getElementById("nivelConfianzaHTML").innerText = `👉 Precisión estimada: ${nivelConfianza}`;
+            }
+            if(document.getElementById("insightHTML") && insight !== "") {
+                document.getElementById("insightHTML").innerText = insight;
+            } else if (document.getElementById("insightHTML")) {
+                 document.getElementById("insightHTML").innerText = ""; // Limpiar si no hay insight
+            }
+
+            const nombreAutoMostrar = `${marcaOficial} ${document.getElementById("tasModelo").value.trim()}`.toUpperCase();
+            const mensajeWa = `Hola! Coticé mi ${nombreAutoMostrar} (${anio}, ${km}km) en el tasador. El rango me dio USD ${min} - ${max}. ¡Quiero que lo vendan por mí!`;
+            document.getElementById("btnWhatsappTasacion").href = `https://wa.me/59892984251?text=${encodeURIComponent(mensajeWa)}`;
+        } catch (e) {
+            console.log("Error al mostrar resultados en el DOM:", e);
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,235 +1,309 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAW New N5 FULL | CP Autos UY</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAW New N5 FULL | CP Autos UY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<style>
-    :root { 
-        --red: #ef233c; 
-        --green: #25D366; 
-        --dark: #1d3557; 
-        --glass: rgba(255, 255, 255, 0.9);
-    }
+    <style>
+        :root { 
+            --primary: #0096d6; /* Azul estilo concesionario */
+            --dark: #1a1a1b; 
+            --gray-bg: #f8f9fa;
+            --border: #e9ecef;
+            --text-muted: #6c757d;
+            --glass-nav: rgba(255, 255, 255, 0.95);
+            --green: #25d366; /* Color WhatsApp */
+        }
 
-    body { 
-        font-family: 'Inter', sans-serif; 
-        margin: 0; 
-        background: #fdfdfd; 
-        color: var(--dark); 
-        line-height: 1.6;
-    }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background: #fff; 
+            color: var(--dark); 
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
 
-    /* --- NAVBAR (Igual al Inicio) --- */
-    .navbar { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        padding: 15px 5%; 
-        background: var(--glass);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(0,0,0,0.05); 
-        position: sticky; 
-        top: 0; 
-        z-index: 1000; 
-    }
-    .navbar img { height: 45px; }
-    .nav-links a { 
-        margin-left: 20px; 
-        text-decoration: none; 
-        color: var(--dark); 
-        font-weight: 600; 
-        font-size: 13px;
-        text-transform: uppercase;
-    }
+        /* --- NAVBAR --- */
+        .navbar { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px 8%; background: var(--glass-nav); backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000; 
+        }
+        .navbar img { height: 38px; }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: var(--dark); font-weight: 600; font-size: 14px; }
 
-    .container {
-        max-width: 900px;
-        margin: 30px auto;
-        padding: 0 20px;
-    }
+        /* --- LAYOUT PRINCIPAL --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto 60px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 40px;
+            align-items: start;
+        }
 
-    .back-link { 
-        display: inline-flex; 
-        align-items: center;
-        margin-bottom: 20px; 
-        text-decoration: none; 
-        color: #666; 
-        font-size: 14px;
-    }
+        @media (max-width: 992px) {
+            .main-container { grid-template-columns: 1fr; }
+            .navbar { padding: 12px 5%; }
+        }
 
-    /* --- CARRUSEL --- */
-    .carousel-container {
-        position: relative;
-        width: 100%;
-        border-radius: 15px;
-        overflow: hidden;
-        background: #000;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
+        /* --- COLUMNA IZQUIERDA: FOTOS Y DETALLES --- */
+        .content-left { width: 100%; overflow: hidden;}
+        .back-link { display: inline-flex; align-items: center; gap: 5px; margin-bottom: 15px; text-decoration: none; color: var(--text-muted); font-size: 14px; }
 
-    .carousel-track {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-    }
-    .carousel-track::-webkit-scrollbar { display: none; }
+        /* CARRUSEL */
+        .carousel-container {
+            position: relative; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            background: #111;
+            aspect-ratio: 16/9;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .carousel-track { 
+            display: flex; 
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory; 
+            scroll-behavior: smooth; 
+            height: 100%; 
+        }
+        .carousel-track::-webkit-scrollbar { display: none; }
+        .carousel-item { 
+            min-width: 100%; 
+            scroll-snap-align: start; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-in;
+        }
+        .carousel-item img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+        }
 
-    .carousel-item {
-        min-width: 100%;
-        scroll-snap-align: start;
-        background: #111;
-        height: 500px;
-    }
-    .carousel-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: white; border: none; width: 44px; height: 44px; border-radius: 50%;
+            cursor: pointer; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--dark); transition: all 0.2s;
+        }
+        .btn-prev { left: 15px; }
+        .btn-next { right: 15px; }
 
-    .nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        z-index: 10;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .btn-prev { left: 15px; }
-    .btn-next { right: 15px; }
+        /* --- DETALLES EXPANDIDOS --- */
+        .section-title { font-size: 20px; font-weight: 700; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--gray-bg); }
+        .main-specs-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px; text-align: center; margin-bottom: 40px; background: var(--gray-bg); padding: 20px; border-radius: 12px;
+        }
+        .spec-icon-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .spec-icon-box i { color: var(--text-muted); width: 28px; height: 28px; }
+        .spec-icon-box span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 500; }
+        .spec-icon-box strong { font-size: 15px; font-weight: 700; }
 
-    /* --- FICHA TÉCNICA --- */
-    .card {
-        background: white;
-        padding: 35px;
-        border-radius: 15px;
-        margin-top: 25px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        border: 1px solid #eee;
-    }
+        /* Tablas */
+        .data-tables-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .data-tables-container { grid-template-columns: 1fr; } }
+        .data-table-box { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .table-header { background: var(--gray-bg); padding: 12px 15px; font-size: 14px; font-weight: 700; color: var(--primary); border-bottom: 1px solid var(--border); }
+        .data-row { display: flex; justify-content: space-between; padding: 10px 15px; font-size: 13px; border-bottom: 1px solid var(--border); }
+        .data-row:last-child { border-bottom: none; }
+        .data-row .label { color: var(--text-muted); font-weight: 500; }
+        .data-row .value { color: var(--dark); font-weight: 600; text-align: right; }
 
-    .price { color: var(--red); font-size: 34px; font-weight: 800; margin: 10px 0; }
-    
-    .specs {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 15px;
-        margin: 25px 0;
-        padding: 20px 0;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-    }
-    .spec-item span { display: block; font-size: 11px; color: #888; text-transform: uppercase; }
-    .spec-item strong { font-size: 17px; }
+        /* --- SIDEBAR --- */
+        .sidebar { position: sticky; top: 100px; height: fit-content; z-index: 90; }
+        @media (max-width: 992px) { .sidebar { position: static; margin-top: -20px; } }
+        
+        .sticky-card {
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: white;
+            margin-bottom: 20px;
+        }
 
-    .btn-contact {
-        display: block;
-        background: var(--green);
-        color: white;
-        padding: 18px;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 10px;
-        font-weight: 700;
-        font-size: 18px;
-    }
+        .car-title-sm { font-size: 13px; font-weight: 600; text-transform: uppercase; margin: 0 0 5px; color: var(--text-muted); letter-spacing: 0.5px;}
+        .car-title-lg { font-size: 22px; font-weight: 700; margin: 0 0 15px; line-height: 1.2; }
+        .price-tag { font-size: 36px; font-weight: 800; margin: 15px 0; color: var(--dark); }
+        
+        .quick-info-bar { display: flex; flex-wrap: wrap; gap: 10px; font-size: 13px; color: var(--text-muted); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+        .quick-info-bar span { background: var(--gray-bg); padding: 4px 8px; border-radius: 4px; font-weight: 500;}
 
-    /* --- FOOTER OSCURO --- */
-    .footer-dark {
-        background-color: #1d3557;
-        color: white;
-        padding: 60px 20px 30px;
-        text-align: center;
-        margin-top: 80px;
-    }
-    .footer-dark a { color: white; text-decoration: none; font-weight: 600; margin: 0 15px; }
-    .copy { 
-        margin-top: 30px; 
-        font-size: 13px; 
-        color: #adb5bd; 
-        border-top: 1px solid rgba(255,255,255,0.1); 
-        padding-top: 25px; 
-    }
+        /* ESTILOS DE LOS BOTONES */
+        .btn-interest {
+            display: block;
+            background: var(--primary);
+            color: white;
+            padding: 16px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 17px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+        .btn-interest:hover { background: #0081b8; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 150, 214, 0.3); }
 
-    @media (max-width: 600px) {
-        .carousel-item { height: 350px; }
-        .nav-btn { display: none; }
-    }
-</style>
+        .btn-whatsapp {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: #fff; color: var(--green); padding: 14px;
+            text-align: center; text-decoration: none; border-radius: 8px;
+            font-weight: 700; font-size: 15px; border: 2px solid var(--green);
+            transition: all 0.3s;
+        }
+        .btn-whatsapp:hover { background: var(--green); color: white; }
+
+        /* Badges */
+        .trust-badge-sidebar {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px; border: 1px solid var(--border);
+            border-radius: 10px; margin-bottom: 10px; background: white;
+        }
+        .trust-badge-sidebar i { color: var(--primary); width: 24px; height: 24px;}
+        .trust-badge-sidebar div p { margin: 0 0 2px; font-size: 13px; font-weight: 700; }
+        .trust-badge-sidebar div span { font-size: 11px; color: var(--text-muted); line-height: 1.2; display: block;}
+
+        /* FOOTER */
+        .footer-simple { background: #1d3557; color: white; padding: 40px 20px; text-align: center; margin-top: auto; font-size: 14px;}
+
+        /* LIGHTBOX */
+        .lightbox-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
+            align-items: center; justify-content: center; cursor: zoom-out;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .lightbox-overlay.active { display: flex; opacity: 1; }
+        .lightbox-img { max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 4px; transform: scale(0.9); transition: transform 0.3s; }
+        .lightbox-overlay.active .lightbox-img { transform: scale(1); }
+        .close-lightbox { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; }
+    </style>
 </head>
 <body>
+
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="close-lightbox">&times;</button>
+    <img src="" class="lightbox-img" id="lightbox-img">
+</div>
 
 <nav class="navbar">
     <a href="index.html"><img src="logo.png" alt="CP Autos UY"></a>
     <div class="nav-links">
         <a href="index.html">Catálogo</a>
-        <a href="index.html">Vender</a>
+        <a href="vender.html">Vender</a>
     </div>
 </nav>
 
-<div class="container">
-    <a href="index.html" class="back-link">← Volver al catálogo</a>
+<div class="main-container">
+    <div class="content-left">
+        <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Volver al catálogo</a>
 
-    <div class="carousel-container">
-        <button class="nav-btn btn-prev" onclick="moveCarousel(-1)">❮</button>
-        <div class="carousel-track" id="track">
-            <div class="carousel-item"><img src="fawn5carrusel%20%282%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%283%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%284%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%285%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%286%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%287%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%288%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%289%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%2810%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%2811%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%2812%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%2813%29.jpeg"></div>
-            <div class="carousel-item"><img src="fawn5carrusel%20%281%29.jpeg"></div>
+        <div class="carousel-container">
+            <button class="nav-btn btn-prev" onclick="moveCarousel(-1)"><i data-lucide="chevron-left"></i></button>
+            <div class="carousel-track" id="track">
+                <div class="carousel-item" onclick="openLightbox(this)"><img src="fawn5carrusel%20%282%29.jpeg"></div>
+                <div class="carousel-item" onclick="openLightbox(this)"><img src="fawn5carrusel%20%283%29.jpeg"></div>
+                <div class="carousel-item" onclick="openLightbox(this)"><img src="fawn5carrusel%20%284%29.jpeg"></div>
+                <div class="carousel-item" onclick="openLightbox(this)"><img src="fawn5carrusel%20%285%29.jpeg"></div>
+            </div>
+            <button class="nav-btn btn-next" onclick="moveCarousel(1)"><i data-lucide="chevron-right"></i></button>
         </div>
-        <button class="nav-btn btn-next" onclick="moveCarousel(1)">❯</button>
+
+        <h3 class="section-title">Características Destacadas</h3>
+        <div class="main-specs-grid">
+            <div class="spec-icon-box"><i data-lucide="gauge"></i><span>Motor</span><strong>1.3 L</strong></div>
+            <div class="spec-icon-box"><i data-lucide="users"></i><span>Pasajeros</span><strong>5</strong></div>
+            <div class="spec-icon-box"><i data-lucide="car"></i><span>Carrocería</span><strong>Sedán</strong></div>
+            <div class="spec-icon-box"><i data-lucide="settings-2"></i><span>Transmisión</span><strong>Manual</strong></div>
+            <div class="spec-icon-box"><i data-lucide="fuel"></i><span>Combustible</span><strong>Nafta</strong></div>
+        </div>
+
+        <h3 class="section-title">Ficha Técnica Detallada</h3>
+        <div class="data-tables-container">
+            <div class="data-table-box">
+                <div class="table-header">Motor y Rendimiento</div>
+                <div class="data-row"><span class="label">Cilindrada</span><span class="value">1342 cc</span></div>
+                <div class="data-row"><span class="label">Potencia</span><span class="value">91 HP</span></div>
+                <div class="data-row"><span class="label">Velocidades</span><span class="value">5 + Reversa</span></div>
+            </div>
+            <div class="data-table-box">
+                <div class="table-header">Dimensiones y Capacidades</div>
+                <div class="data-row"><span class="label">Tanque Combustible</span><span class="value">45 L</span></div>
+                <div class="data-row"><span class="label">Puertas</span><span class="value">4</span></div>
+                <div class="data-row"><span class="label">Dirección</span><span class="value">Asistida</span></div>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>FAW New N5 FULL</h2>
-        <p class="price">$6.800</p>
-        
-        <div class="specs">
-            <div class="spec-item"><span>Año</span><strong>2017</strong></div>
-            <div class="spec-item"><span>KM</span><strong>179.000</strong></div>
-            <div class="spec-item"><span>Motor</span><strong>1.3</strong></div>
-            <div class="spec-item"><span>Transmisión</span><strong>Manual</strong></div>
+    <div class="sidebar">
+        <div class="sticky-card">
+            <p class="car-title-sm">Usado Destacado</p>
+            <h1 class="car-title-lg">FAW New N5 1.3 FULL</h1>
+            
+            <div class="quick-info-bar">
+                <span>Año 2017</span>
+                <span>179.000 KM</span>
+                <span>Montevideo</span>
+            </div>
+
+            <p class="car-title-sm">Precio CP Autos</p>
+            <p class="price-tag">US$ 6.800</p>
+            
+            <a href="https://wa.me/59892984251?text=Hola%20CP%20Autos,%20estoy%20interesado%20en%20el%20FAW%20New%20N5." class="btn-interest" target="_blank">
+                ¡Me interesa!
+            </a>
+
+            <a href="https://wa.me/59892984251" class="btn-whatsapp" target="_blank">
+                <i data-lucide="message-circle"></i> Consultar por WhatsApp
+            </a>
         </div>
 
-        <a href="https://wa.me/59892984251" class="btn-contact">Consultar por WhatsApp</a>
+        <div class="trust-badge-sidebar">
+            <i data-lucide="shield-check"></i>
+            <div>
+                <p>Documentación Garantizada</p>
+                <span>Títulos y patente revisados.</span>
+            </div>
+        </div>
     </div>
 </div>
 
-<footer class="footer-dark">
-    <div style="margin-bottom: 25px;">
-        <a href="index.html">Inicio</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="https://wa.me/59892984251">Contacto</a>
-    </div>
-    <div class="copy">
-        &copy; 2026 CP Autos UY - Montevideo, Uruguay. <br>
-        Todos los derechos reservados.
-    </div>
+<footer class="footer-simple">
+    <p>&copy; 2026 CP Autos UY - Montevideo, Uruguay.</p>
 </footer>
 
 <script>
+    lucide.createIcons();
+
     function moveCarousel(direction) {
         const track = document.getElementById('track');
         const itemWidth = track.querySelector('.carousel-item').clientWidth;
         track.scrollBy({ left: itemWidth * direction, behavior: 'smooth' });
+    }
+
+    function openLightbox(element) {
+        const imgSrc = element.querySelector('img').src;
+        const lightbox = document.getElementById('lightbox');
+        document.getElementById('lightbox-img').src = imgSrc;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 </script>
 

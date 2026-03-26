@@ -245,16 +245,15 @@
 </style>
 </head>
 <body>
-
 <nav class="navbar">
     <img src="logo.png" alt="CP Autos UY">
     <div class="nav-links">
         <a onclick="showSection('comprar')">Comprar</a>
-        <a onclick="showSection('vender')">Vender</a>
+        <a href="venta.html">Vender</a>
+        <a href="recomendar.html" style="color: var(--red);">¿No sabes que comprar?</a> 
         <a href="https://wa.me/59892984251">Contacto</a>
     </div>
 </nav>
-
 <div id="section-comprar" class="info-section">
     <div style="max-width: 800px; margin: 0 auto;">
         <h2>¿Cómo comprar en CP Autos?</h2>
@@ -263,28 +262,12 @@
             <li style="margin-bottom: 15px;">✅ <strong>Busca:</strong> Elegís el auto que más te guste de nuestro catálogo.</li>
             <li style="margin-bottom: 15px;">✅ <strong>Lo ves:</strong> Coordinamos una visita en nuestro punto de encuentro seguro.</li>
             <li style="margin-bottom: 15px;">✅ <strong>Chequeas:</strong> Revisión mecánica permitida.</li>
+	    <li style="margin-bottom: 15px;">✅ <strong>Compras:</strong> Ahora te toca disfrutar.</li>
         </ul>
         <button onclick="closeSections()" style="padding:10px 20px; border-radius:5px; border:1px solid #ccc; cursor:pointer; background:white;">Cerrar ✕</button>
     </div>
 </div>
 
-<div id="section-vender" class="info-section">
-    <div style="max-width: 800px; margin: 0 auto;">
-        <h2>Vende tu auto sin estrés</h2>
-        <p>Publicamos en los portales más importantes y gestionamos todos los interesados.</p>
-        
-        <div class="calc-box">
-            <h4>Calculadora de Ganancia</h4>
-            <p style="font-size: 13px; color: #666;">Ingresa el precio de venta pretendido:</p>
-            <input type="number" id="inputPrecio" placeholder="Precio en USD (Ej: 15000)" oninput="calcular()" 
-                   style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
-            <p style="font-size: 18px; margin-top:15px;">Tú recibes libre: <strong id="txtTotal" style="color:var(--red)">$ 0</strong></p>
-        </div>
-        <br>
-        <a href="https://wa.me/59892984251?text=Hola, quiero vender mi auto" class="btn-wa">Hablar con un asesor</a>
-        <button onclick="closeSections()" style="padding:12px 20px; border:none; cursor:pointer; margin-left:10px; background:none; text-decoration: underline;">Volver</button>
-    </div>
-</div>
 
 <header class="hero">
     <h1>Vendemos tu auto rápido y sin complicaciones</h1>

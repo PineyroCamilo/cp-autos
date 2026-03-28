@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CP Autos UY | Venta de Usados</title>
-	<link rel="icon" type="image/png" href="logo.png"> 
+    <link rel="icon" type="image/png" href="logo.png"> 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
     :root { 
@@ -40,6 +40,7 @@
         z-index: 1000; 
     }
     .navbar img { height: 50px; transition: 0.3s; }
+    .nav-links { display: flex; align-items: center; }
     .nav-links a { 
         margin-left: 20px; 
         text-decoration: none; 
@@ -52,6 +53,94 @@
         letter-spacing: 0.5px;
     }
     .nav-links a:hover { color: var(--red); }
+
+    /* --- MENÚ DESPLEGABLE --- */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .dropbtn {
+        background-color: transparent;
+        color: var(--dark);
+        font-weight: 700;
+        font-size: 14px;
+        border: 2px solid var(--dark);
+        border-radius: 50px;
+        padding: 8px 16px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: 'Inter', sans-serif;
+        transition: 0.3s;
+    }
+    .dropbtn:hover { 
+        color: var(--red); 
+        border-color: var(--red);
+    }
+   .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%; /* Lo pega exactamente debajo del botón */
+        background-color: #ffffff;
+        min-width: 220px;
+        box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+        z-index: 1001;
+        border-radius: 12px;
+        overflow: hidden;
+        /* Eliminamos el margin-top problemático */
+        margin-top: 5px; /* Lo reducimos al mínimo */
+        padding-top: 5px; /* Creamos un área clickeable extra para que no se cierre */
+        border: 1px solid #eee;
+    }
+
+    /* Agregamos un "puente" invisible para que el mouse no pierda el hover */
+    .dropdown-content::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: transparent;
+    }
+
+    .dropdown-content a {
+        color: var(--dark);
+        padding: 16px 20px; /* Aumentamos el padding para que sea fácil de tocar con el dedo */
+        text-decoration: none;
+        display: block;
+        margin: 0;
+        font-size: 15px; /* Letra un poco más grande para leer mejor en pantallas chicas */
+        border-bottom: 1px solid #f8f9fa;
+        text-transform: none; 
+        font-weight: 500;
+    }
+
+    .dropdown-content a {
+        color: var(--dark);
+        padding: 16px 20px; /* Aumentamos el padding para que sea fácil de tocar con el dedo */
+        text-decoration: none;
+        display: block;
+        margin: 0;
+        font-size: 15px; /* Letra un poco más grande para leer mejor en pantallas chicas */
+        border-bottom: 1px solid #f8f9fa;
+        text-transform: none; 
+        font-weight: 500;
+    }
+    .dropdown-content a:last-child {
+        border-bottom: none;
+    }
+    .dropdown-content a:hover {
+        background-color: #f8f9fa;
+        color: var(--red);
+        padding-left: 25px; /* Efecto de movimiento al pasar el mouse */
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
 
     /* --- SECCIONES DE INFORMACIÓN --- */
     .info-section { 
@@ -164,7 +253,8 @@
     .car-info h3 { margin: 0 0 10px 0; font-size: 18px; color: var(--dark); }
     .car-info p { margin: 5px 0; color: #777; font-size: 14px; }
     .price { color: var(--red); font-weight: 700; font-size: 22px; margin-top: 10px !important; }
-.footer-dark {
+    
+    .footer-dark {
         background-color: #1d3557 !important;
         color: #ffffff !important;
         padding: 50px 20px !important;
@@ -233,14 +323,16 @@
     @media (max-width: 768px) {
         .container { flex-direction: column; padding: 20px; }
         .filters { width: 100%; position: static; box-sizing: border-box; margin-bottom: 20px; }
-        .navbar { padding: 10px 20px; }
-        .nav-links a { margin-left: 10px; font-size: 12px; }
+        .navbar { padding: 10px 20px; flex-wrap: wrap; }
+        .nav-links { margin-top: 10px; width: 100%; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .nav-links a { margin-left: 0; font-size: 12px; }
+        .dropdown { margin-left: 0; }
         .hero { height: 250px; }
-        .cars { grid-template-columns: 1fr; } /* Un auto por fila en celular */
+        .cars { grid-template-columns: 1fr; } 
     }
 
     @keyframes slideDown { 
-        from { opacity: 0; transform: translateY(-20px); } 
+        from { opacity: 0; transform: translateY(-10px); } 
         to { opacity: 1; transform: translateY(0); } 
     }
 </style>
@@ -253,8 +345,20 @@
         <a href="venta.html">Vender</a>
         <a href="recomendar.html" style="color: var(--red);">¿No sabes que comprar?</a> 
         <a href="https://wa.me/59892984251">Contacto</a>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Menú ▼</button>
+            <div class="dropdown-content">
+                <a onclick="showSection('comprar')">Comprar</a>
+                <a href="venta.html">Vender</a>
+                <a href="recomendar.html">¿No sabes que comprar?</a>
+                <a href="https://wa.me/59892984251">Contacto</a>
+                <a href="vendidos.html" style="color: var(--red); font-weight: 700;">★ Vendidos</a>
+            </div>
+        </div>
     </div>
 </nav>
+
 <div id="section-comprar" class="info-section">
     <div style="max-width: 800px; margin: 0 auto;">
         <h2>¿Cómo comprar en CP Autos?</h2>
@@ -263,12 +367,11 @@
             <li style="margin-bottom: 15px;">✅ <strong>Busca:</strong> Elegís el auto que más te guste de nuestro catálogo.</li>
             <li style="margin-bottom: 15px;">✅ <strong>Lo ves:</strong> Coordinamos una visita en nuestro punto de encuentro seguro.</li>
             <li style="margin-bottom: 15px;">✅ <strong>Chequeas:</strong> Revisión mecánica permitida.</li>
-	    <li style="margin-bottom: 15px;">✅ <strong>Compras:</strong> Ahora te toca disfrutar.</li>
+            <li style="margin-bottom: 15px;">✅ <strong>Compras:</strong> Ahora te toca disfrutar.</li>
         </ul>
         <button onclick="closeSections()" style="padding:10px 20px; border-radius:5px; border:1px solid #ccc; cursor:pointer; background:white;">Cerrar ✕</button>
     </div>
 </div>
-
 
 <header class="hero">
     <h1>Vendemos tu auto rápido y sin complicaciones</h1>
@@ -280,56 +383,56 @@
 
         <details>
             <summary>Marcas</summary>
-           <button class="filter-btn" onclick="filterBy('Audi')">Audi</button>
-<button class="filter-btn" onclick="filterBy('BAIC')">BAIC</button>
-<button class="filter-btn" onclick="filterBy('Bestune')">Bestune</button>
-<button class="filter-btn" onclick="filterBy('BMW')">BMW</button>
-<button class="filter-btn" onclick="filterBy('BYD')">BYD</button>
-<button class="filter-btn" onclick="filterBy('Changan')">Changan</button>
-<button class="filter-btn" onclick="filterBy('Chery')">Chery</button>
-<button class="filter-btn" onclick="filterBy('Chevrolet')">Chevrolet</button>
-<button class="filter-btn" onclick="filterBy('Citroën')">Citroën</button>
-<button class="filter-btn" onclick="filterBy('DFSK')">DFSK</button>
-<button class="filter-btn" onclick="filterBy('Dongfeng')">Dongfeng</button>
-<button class="filter-btn" onclick="filterBy('FAW')">FAW</button>
-<button class="filter-btn" onclick="filterBy('Fiat')">Fiat</button>
-<button class="filter-btn" onclick="filterBy('Ford')">Ford</button>
-<button class="filter-btn" onclick="filterBy('Foton')">Foton</button>
-<button class="filter-btn" onclick="filterBy('GAC')">GAC</button>
-<button class="filter-btn" onclick="filterBy('Geely')">Geely</button>
-<button class="filter-btn" onclick="filterBy('Great Wall')">Great Wall</button>
-<button class="filter-btn" onclick="filterBy('Honda')">Honda</button>
-<button class="filter-btn" onclick="filterBy('Hyundai')">Hyundai</button>
-<button class="filter-btn" onclick="filterBy('JAC')">JAC</button>
-<button class="filter-btn" onclick="filterBy('Jaguar')">Jaguar</button>
-<button class="filter-btn" onclick="filterBy('Jetour')">Jetour</button>
-<button class="filter-btn" onclick="filterBy('JMC')">JMC</button>
-<button class="filter-btn" onclick="filterBy('Kia')">Kia</button>
-<button class="filter-btn" onclick="filterBy('Lexus')">Lexus</button>
-<button class="filter-btn" onclick="filterBy('Lifan')">Lifan</button>
-<button class="filter-btn" onclick="filterBy('Maserati')">Maserati</button>
-<button class="filter-btn" onclick="filterBy('Mazda')">Mazda</button>
-<button class="filter-btn" onclick="filterBy('Mercedes-Benz')">Mercedes-Benz</button>
-<button class="filter-btn" onclick="filterBy('MG')">MG</button>
-<button class="filter-btn" onclick="filterBy('Mini')">Mini</button>
-<button class="filter-btn" onclick="filterBy('Mitsubishi')">Mitsubishi</button>
-<button class="filter-btn" onclick="filterBy('Nissan')">Nissan</button>
-<button class="filter-btn" onclick="filterBy('Peugeot')">Peugeot</button>
-<button class="filter-btn" onclick="filterBy('Porsche')">Porsche</button>
-<button class="filter-btn" onclick="filterBy('Renault')">Renault</button>
-<button class="filter-btn" onclick="filterBy('Seat')">Seat</button>
-<button class="filter-btn" onclick="filterBy('Subaru')">Subaru</button>
-<button class="filter-btn" onclick="filterBy('Suzuki')">Suzuki</button>
-<button class="filter-btn" onclick="filterBy('Toyota')">Toyota</button>
-<button class="filter-btn" onclick="filterBy('Volkswagen')">Volkswagen</button>
+            <button class="filter-btn" onclick="filterBy('Audi')">Audi</button>
+            <button class="filter-btn" onclick="filterBy('BAIC')">BAIC</button>
+            <button class="filter-btn" onclick="filterBy('Bestune')">Bestune</button>
+            <button class="filter-btn" onclick="filterBy('BMW')">BMW</button>
+            <button class="filter-btn" onclick="filterBy('BYD')">BYD</button>
+            <button class="filter-btn" onclick="filterBy('Changan')">Changan</button>
+            <button class="filter-btn" onclick="filterBy('Chery')">Chery</button>
+            <button class="filter-btn" onclick="filterBy('Chevrolet')">Chevrolet</button>
+            <button class="filter-btn" onclick="filterBy('Citroën')">Citroën</button>
+            <button class="filter-btn" onclick="filterBy('DFSK')">DFSK</button>
+            <button class="filter-btn" onclick="filterBy('Dongfeng')">Dongfeng</button>
+            <button class="filter-btn" onclick="filterBy('FAW')">FAW</button>
+            <button class="filter-btn" onclick="filterBy('Fiat')">Fiat</button>
+            <button class="filter-btn" onclick="filterBy('Ford')">Ford</button>
+            <button class="filter-btn" onclick="filterBy('Foton')">Foton</button>
+            <button class="filter-btn" onclick="filterBy('GAC')">GAC</button>
+            <button class="filter-btn" onclick="filterBy('Geely')">Geely</button>
+            <button class="filter-btn" onclick="filterBy('Great Wall')">Great Wall</button>
+            <button class="filter-btn" onclick="filterBy('Honda')">Honda</button>
+            <button class="filter-btn" onclick="filterBy('Hyundai')">Hyundai</button>
+            <button class="filter-btn" onclick="filterBy('JAC')">JAC</button>
+            <button class="filter-btn" onclick="filterBy('Jaguar')">Jaguar</button>
+            <button class="filter-btn" onclick="filterBy('Jetour')">Jetour</button>
+            <button class="filter-btn" onclick="filterBy('JMC')">JMC</button>
+            <button class="filter-btn" onclick="filterBy('Kia')">Kia</button>
+            <button class="filter-btn" onclick="filterBy('Lexus')">Lexus</button>
+            <button class="filter-btn" onclick="filterBy('Lifan')">Lifan</button>
+            <button class="filter-btn" onclick="filterBy('Maserati')">Maserati</button>
+            <button class="filter-btn" onclick="filterBy('Mazda')">Mazda</button>
+            <button class="filter-btn" onclick="filterBy('Mercedes-Benz')">Mercedes-Benz</button>
+            <button class="filter-btn" onclick="filterBy('MG')">MG</button>
+            <button class="filter-btn" onclick="filterBy('Mini')">Mini</button>
+            <button class="filter-btn" onclick="filterBy('Mitsubishi')">Mitsubishi</button>
+            <button class="filter-btn" onclick="filterBy('Nissan')">Nissan</button>
+            <button class="filter-btn" onclick="filterBy('Peugeot')">Peugeot</button>
+            <button class="filter-btn" onclick="filterBy('Porsche')">Porsche</button>
+            <button class="filter-btn" onclick="filterBy('Renault')">Renault</button>
+            <button class="filter-btn" onclick="filterBy('Seat')">Seat</button>
+            <button class="filter-btn" onclick="filterBy('Subaru')">Subaru</button>
+            <button class="filter-btn" onclick="filterBy('Suzuki')">Suzuki</button>
+            <button class="filter-btn" onclick="filterBy('Toyota')">Toyota</button>
+            <button class="filter-btn" onclick="filterBy('Volkswagen')">Volkswagen</button>
         </details>
 
         <details>
             <summary>Combustible</summary>
             <button class="filter-btn" onclick="filterBy('Nafta')">Nafta</button>
-<button class="filter-btn" onclick="filterBy('Diésel')">Diésel</button>
-<button class="filter-btn" onclick="filterBy('Eléctrico')">Eléctrico</button>
-<button class="filter-btn" onclick="filterBy('Híbrido')">Híbrido</button>
+            <button class="filter-btn" onclick="filterBy('Diésel')">Diésel</button>
+            <button class="filter-btn" onclick="filterBy('Eléctrico')">Eléctrico</button>
+            <button class="filter-btn" onclick="filterBy('Híbrido')">Híbrido</button>
         </details>
 
         <div style="margin-top:20px;">
@@ -347,13 +450,13 @@
         <input type="text" id="searchInput" class="search-bar" placeholder="Busca por marca, modelo o año..." onkeyup="applyFilters()">
         
         <div class="cars" id="carContainer">
-            <a href="auto.html" class="car">
-                <img src="fawn5.png" alt="FAW New N5">
+            <a href="VWUP2019.html" class="car">
+                <img src="VWUP20191.png" alt="Volkswagen Up! 1.0">
                 <div class="car-info">
-                    <h3>FAW New N5 FULL</h3>
-                    <p>2017 | 179.000 km</p>
+                    <h3>Volkswagen Up! 1.0</h3>
+                    <p>2019 | 163.000 km</p>
                     <p>Nafta | Manual</p>
-                    <p class="price">$6.800</p>
+                    <p class="price">$10.290</p>
                 </div>
             </a>
             
@@ -366,6 +469,7 @@
         </div>
     </main>
 </div>
+
 <footer class="footer-dark">
     <div style="margin-bottom: 20px;">
         <a href="https://wa.me/59892984251">Contáctanos</a>
@@ -376,12 +480,13 @@
         Todos los derechos reservados.
     </div>
 </footer>
+
 <a class="whatsapp-float" href="https://wa.me/59892984251" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </a>
 
 <script>
-    // FUNCIONES DE SECCIONES (Lógica original intacta)
+    // FUNCIONES DE SECCIONES
     function showSection(id) {
         closeSections();
         document.getElementById('section-' + id).classList.add('active');
@@ -391,7 +496,7 @@
         document.querySelectorAll('.info-section').forEach(s => s.classList.remove('active'));
     }
 
-    // LÓGICA DE FILTROS (Mantenida como pediste)
+    // LÓGICA DE FILTROS
     function applyFilters() {
         const text = document.getElementById("searchInput").value.toLowerCase();
         const maxPrice = parseInt(document.getElementById("priceRange").value);
@@ -430,14 +535,15 @@
         applyFilters();
     }
 
-    // CALCULADORA (Lógica intacta)
+    // CALCULADORA
     function calcular() {
         const p = document.getElementById("inputPrecio").value;
         const total = p > 0 ? p - (p * 0.04 * 1.22) : 0;
         document.getElementById("txtTotal").innerText = "$ " + Math.round(total).toLocaleString();
     }
-
 </script>
+</body>
+</html>
 
 </body>
 </html>

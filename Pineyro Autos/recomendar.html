@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente de Selección | Piñeyro Autos</title>
+    <link rel="icon" type="image/png" href="logo.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --red: #ef233c; 
+            --red-hover: #d90429; 
+            --green: #25D366; 
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --border: rgba(255, 255, 255, 0.1);
+            --text-light: #f5f5f7;
+            --text-muted: #86868b;
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg-dark); 
+            color: var(--text-light); 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar { 
+            padding: 15px 5%; 
+            background: rgba(10, 10, 10, 0.95); 
+            backdrop-filter: blur(10px);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .navbar img { height: 60px; }
+        .btn-back { 
+            text-decoration: none; 
+            color: var(--text-muted); 
+            font-weight: 600; 
+            font-size: 14px; 
+            transition: 0.3s;
+        }
+        .btn-back:hover { color: white; }
+
+        /* --- CONTENEDOR --- */
+        .wizard-container {
+            flex: 1; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+        }
+
+        .wizard-card {
+            background: var(--card-dark); 
+            width: 100%; 
+            max-width: 550px;
+            border-radius: 28px; 
+            padding: 50px; 
+            border: 1px solid var(--border);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: relative; 
+            overflow: hidden;
+        }
+
+        /* --- BARRA PROGRESO --- */
+        .progress-bar {
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            height: 5px;
+            background: var(--red); 
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            width: 16.6%;
+        }
+
+        /* --- PASOS --- */
+        .step { display: none; animation: slideUp 0.5s ease forwards; }
+        .step.active { display: block; }
+
+        h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+        p.desc { color: var(--text-muted); margin-bottom: 35px; font-size: 16px; }
+
+        /* --- OPCIONES --- */
+        .options-grid {
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            border: 1px solid var(--border); 
+            border-radius: 18px; 
+            padding: 25px;
+            text-align: center; 
+            cursor: pointer; 
+            transition: 0.3s;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 12px;
+            background: rgba(255,255,255,0.02);
+            font-weight: 500;
+        }
+        .option-card:hover { border-color: var(--red); background: rgba(239, 35, 60, 0.05); }
+        .option-card.selected { border-color: var(--red); background: var(--red); color: white; font-weight: 700; }
+        .option-card span { font-size: 32px; }
+
+        /* --- INPUTS --- */
+        input[type="text"], textarea {
+            width: 100%; 
+            padding: 18px; 
+            border-radius: 14px; 
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 16px; 
+            font-family: inherit; 
+            margin-bottom: 20px; 
+            box-sizing: border-box; 
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--red); background: rgba(255,255,255,0.08); }
+
+        /* --- BOTONES --- */
+        .buttons { display: flex; gap: 15px; }
+        .btn {
+            flex: 1; 
+            padding: 18px; 
+            border-radius: 14px; 
+            font-weight: 700;
+            cursor: pointer; 
+            transition: 0.3s; 
+            border: none; 
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-next { background: white; color: black; }
+        .btn-next:hover { transform: translateY(-2px); background: #eee; }
+        .btn-prev { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+        .btn-prev:hover { color: white; border-color: white; }
+        
+        .btn-whatsapp { 
+            background: var(--green); 
+            color: white; 
+            width: 100%; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 10px;
+            box-sizing: border-box; 
+        }
+        .btn-whatsapp:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .wizard-card { padding: 30px 20px; border-radius: 0; height: 100%; max-width: none; border: none; }
+            .options-grid { grid-template-columns: 1fr; }
+            .navbar img { height: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="inicio.html"><img src="logo1.png" alt="Piñeyro Autos"></a>
+    <a href="inicio.html" class="btn-back">Cancelar</a>
+</nav>
+
+<div class="wizard-container">
+    <div class="wizard-card">
+        <div class="progress-bar" id="progress"></div>
+
+        <div class="step active" id="step1">
+            <h2>Presupuesto estimado</h2>
+            <p class="desc">Definir un rango nos permite filtrar las mejores unidades disponibles.</p>
+            <input type="text" id="data-presupuesto" placeholder="Ej: Entre USD 12.000 y 18.000">
+            <div class="buttons">
+                <button class="btn btn-next" onclick="nextStep(2)">Continuar</button>
+            </div>
+        </div>
+
+        <div class="step" id="step2">
+            <h2>Tipo de vehículo</h2>
+            <p class="desc">¿Qué formato se adapta mejor a tu estilo de vida?</p>
+            <div class="options-grid">
+                <div class="option-card" onclick="selectOption('tipo', 'Hatchback', this)">
+                    <span>🚗</span> Hatchback
+                </div>
+                <div class="option-card" onclick="selectOption('tipo', 'SUV / Camioneta', this)">
+                    <span>🚙</span> SUV
+                </div>
+                <div class="option-card" onclick="selectOption('tipo', 'Sedán', this)">
+                    <span>🚘</span> Sedán
+                </div>
+                <div class="option-card" onclick="selectOption('tipo', 'Pick-up', this)">
+                    <span>🛻</span> Pick-up
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btn btn-prev" onclick="nextStep(1)">Atrás</button>
+                <button class="btn btn-next" onclick="nextStep(3)">Siguiente</button>
+            </div>
+        </div>
+
+        <div class="step" id="step3">
+            <h2>Uso principal</h2>
+            <p class="desc">Esto nos ayuda a recomendarte la motorización ideal.</p>
+            <div class="options-grid">
+                <div class="option-card" onclick="selectOption('uso', 'Ciudad / Diario', this)">
+                    <span>🏙️</span> Ciudad
+                </div>
+                <div class="option-card" onclick="selectOption('uso', 'Ruta / Viajes', this)">
+                    <span>🛣️</span> Ruta
+                </div>
+                <div class="option-card" onclick="selectOption('uso', 'Trabajo', this)">
+                    <span>🛠️</span> Trabajo
+                </div>
+                <div class="option-card" onclick="selectOption('uso', 'Mixto', this)">
+                    <span>🔄</span> Mixto
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btn btn-prev" onclick="nextStep(2)">Atrás</button>
+                <button class="btn btn-next" onclick="nextStep(4)">Siguiente</button>
+            </div>
+        </div>
+
+        <div class="step" id="step4">
+            <h2>Detalles finales</h2>
+            <p class="desc">¿Alguna marca de preferencia o equipamiento indispensable?</p>
+            <textarea id="data-pref" rows="3" placeholder="Ej: Automático, techo solar, prefiero marca japonesa..."></textarea>
+            <input type="text" id="data-nombre" placeholder="Tu nombre completo">
+            <div class="buttons">
+                <button class="btn btn-prev" onclick="nextStep(3)">Atrás</button>
+                <button class="btn btn-next" onclick="nextStep(5)">Siguiente</button>
+            </div>
+        </div>
+
+        <div class="step" id="step5">
+            <h2>¿Tenés una permuta?</h2>
+            <p class="desc">Tomamos tu vehículo actual como parte de pago.</p>
+            <div class="options-grid">
+                <div class="option-card" onclick="selectOption('permuta', 'Sí, deseo entregar mi auto', this)">
+                    <span>✅</span> Sí, tengo permuta
+                </div>
+                <div class="option-card" onclick="selectOption('permuta', 'No, es solo compra', this)">
+                    <span>❌</span> No, solo compra
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btn btn-prev" onclick="nextStep(4)">Atrás</button>
+                <button class="btn btn-next" onclick="prepararResumen()">Revisar Pedido</button>
+            </div>
+        </div>
+
+        <div class="step" id="step6">
+            <h2>Resumen de búsqueda</h2>
+            <div id="resumen-container" style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 18px; border: 1px solid var(--border); margin-bottom: 25px; font-size: 15px;">
+                </div>
+            <div class="buttons">
+                <button class="btn btn-prev" onclick="nextStep(5)">Atrás</button>
+                <button class="btn btn-whatsapp" onclick="enviarFinal()">Enviar por WhatsApp</button>
+            </div>
+        </div>  
+    </div>
+</div>
+
+<script>
+    let formData = {
+        presupuesto: '',
+        tipo: '',
+        uso: '',
+        pref: '',
+        nombre: '',
+        permuta: ''
+    };
+
+    function nextStep(stepNumber) {
+        if(stepNumber === 2 && !document.getElementById('data-presupuesto').value) {
+            alert("Por favor, ingresá un presupuesto estimado.");
+            return;
+        }
+
+        document.querySelectorAll('.step').forEach(s => {
+            s.style.display = 'none';
+            s.classList.remove('active');
+        });
+
+        const nextStepEl = document.getElementById('step' + stepNumber);
+        if (nextStepEl) {
+            nextStepEl.style.display = 'block';
+            nextStepEl.classList.add('active');
+            document.getElementById('progress').style.width = (stepNumber * 16.6) + '%';
+        }
+    }
+
+    function selectOption(key, value, element) {
+        formData[key] = value;
+        const parent = element.parentElement;
+        parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    function prepararResumen() {
+        formData.presupuesto = document.getElementById('data-presupuesto').value;
+        formData.pref = document.getElementById('data-pref').value;
+        formData.nombre = document.getElementById('data-nombre').value;
+
+        if(!formData.nombre) {
+            alert("Por favor, ingresá tu nombre para continuar.");
+            nextStep(4);
+            return;
+        }
+
+        const resumenHTML = `
+            <div style="margin-bottom:10px"><span style="color:var(--muted-text)">Cliente:</span> ${formData.nombre}</div>
+            <div style="margin-bottom:10px"><span style="color:var(--muted-text)">Inversión:</span> ${formData.presupuesto}</div>
+            <div style="margin-bottom:10px"><span style="color:var(--muted-text)">Categoría:</span> ${formData.tipo || 'No especificado'}</div>
+            <div style="margin-bottom:10px"><span style="color:var(--muted-text)">Uso:</span> ${formData.uso || 'No especificado'}</div>
+            <div style="margin-bottom:10px"><span style="color:var(--muted-text)">Permuta:</span> ${formData.permuta || 'No'}</div>
+            <div style="border-top:1px solid var(--border); margin-top:15px; padding-top:15px; color:var(--text-muted)">
+                <em>"${formData.pref || 'Sin preferencias adicionales'}"</em>
+            </div>
+        `;
+        document.getElementById('resumen-container').innerHTML = resumenHTML;
+        nextStep(6);
+    }
+
+    function enviarFinal() {
+        const mensaje = `¡Hola Piñeyro Autos! 👋 Soy *${formData.nombre}*, me gustaría recibir asesoramiento para mi próxima compra:%0A%0A` +
+                        `💰 *Presupuesto:* ${formData.presupuesto}%0A` +
+                        `🚗 *Tipo:* ${formData.tipo}%0A` +
+                        `🛣️ *Uso:* ${formData.uso}%0A` +
+                        `🔄 *Permuta:* ${formData.permuta}%0A` +
+                        `✨ *Preferencias:* ${formData.pref}`;
+
+        window.open(`https://wa.me/59892984251?text=${mensaje}`, '_blank');
+    }
+</script>
+
+</body>
+</html>

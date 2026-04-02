@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CP Autos UY | Inicio</title>
+    <link rel="icon" type="image/png" href="logo.jpeg"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --red: #ef233c; 
+            --white: #ffffff;
+            --dark-overlay: rgba(0, 0, 0, 0.4);
+        }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        font-family: 'Inter', sans-serif;
+        background-color: transparent; /* IMPORTANTE: Transparente para ver el video */
+        color: var(--white);
+    }
+
+    /* CONTENEDOR DEL VIDEO */
+    .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -10; /* Lo mandamos al fondo del todo */
+        overflow: hidden;
+        background-color: #000;
+    }
+
+    .video-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* CAPA OSCURA PARA DISIMULAR CALIDAD */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* Esto crea un efecto de malla fina sobre el video */
+        background-image: radial-gradient(rgba(0,0,0,0.4) 1px, transparent 1px);
+        background-size: 3px 3px;
+        background-color: rgba(0, 0, 0, 0.5); 
+        z-index: -5;
+    }
+
+    /* ESTO PERMITE EL SCROLL */
+    .hero-content {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-minimal {
+        position: relative;
+        z-index: 2;
+        background: #000;
+    }
+
+        /* --- NAVBAR ESTILO FERRARI --- */
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .navbar img { height: 80px; } /* MODIFICADO: Logo más grande */
+
+        .nav-links { display: flex; align-items: center; }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { opacity: 0.7; }
+
+        /* --- CONTENIDO HERO --- */
+        .hero-content {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(30px, 6vw, 60px);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin: 0 0 30px 0;
+            letter-spacing: 2px;
+        }
+
+        .btn-discover {
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .btn-discover .arrow {
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            transition: 0.3s;
+        }
+
+        .btn-discover:hover .arrow {
+            background-color: var(--white);
+            color: #000;
+        }
+
+    /* CONTENEDOR PRINCIPAL MUROS */
+    .muro-container {
+        padding: 60px 5%;
+        background-color: #000;
+        position: relative;
+        z-index: 2;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 32px;
+        margin-bottom: 50px;
+        color: var(--white);
+        font-weight: 600;
+    }
+
+    .section-title-link {
+        color: var(--white);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        display: block;
+    }
+
+    .section-title-link:hover .section-title {
+        color: var(--red);
+    }
+
+    /* GRILLA 1: DISPONIBLES */
+    .grid-disponibles {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* MODIFICADO: 4 columnas para hacerlo más chico */
+        gap: 15px;
+        margin-bottom: 80px;
+    }
+
+    /* GRILLA 2: NOVEDADES (ESTILO FOTO 2 - 3 COLUMNAS) */
+    .grid-novedades {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    /* ESTILO GENERAL DE TARJETAS */
+    .muro-item {
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        border-radius: 8px; /* Bordes redondeados sutiles como en las fotos */
+        text-decoration: none;
+        display: block;
+    }
+
+    .grid-disponibles .muro-item {
+        height: 250px; /* MODIFICADO: Altura reducida para que sea más chico */
+    }
+
+    .grid-novedades .muro-item {
+        height: 380px; /* Tarjetas un poco más cuadradas para la grilla de 3 */
+    }
+
+    .muro-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .muro-item:hover img {
+        transform: scale(1.05);
+    }
+
+    /* CAPA DE TEXTO ALINEADA ABAJO */
+    .muro-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px; /* Reducido un poco el padding interno para ajustarse al nuevo tamaño */
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        box-sizing: border-box;
+    }
+
+    .muro-text-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .muro-tag {
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        backdrop-filter: blur(5px);
+    }
+
+    .muro-name {
+        font-size: 18px; /* Reducido para ajustarse al muro más chico */
+        font-weight: 600;
+        color: var(--white);
+        margin: 0 0 6px 0;
+    }
+
+    .muro-specs {
+        font-size: 12px; /* Reducido para ajustarse al muro más chico */
+        color: #cccccc;
+        font-weight: 300;
+    }
+
+    .muro-arrow {
+        color: var(--white);
+        font-size: 20px;
+        font-weight: 300;
+        transition: transform 0.3s ease;
+    }
+
+    .muro-item:hover .muro-arrow {
+        transform: translateX(5px);
+    }
+
+    /* ADAPTACIÓN PARA MÓVILES */
+    @media (max-width: 900px) {
+        .grid-disponibles {
+            grid-template-columns: repeat(2, 1fr); /* En móviles caen a 2 columnas en vez de 4 */
+        }
+        .grid-novedades {
+            grid-template-columns: 1fr;
+        }
+        .grid-disponibles .muro-item {
+            height: 200px;
+        }
+        .grid-novedades .muro-item {
+            height: 350px;
+        }
+        .section-title {
+            font-size: 26px;
+        }
+    }
+
+        /* --- FOOTER INSPIRADO EN FERRARI --- */
+        .footer-minimal {
+            background: #000;
+            padding: 80px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            border-top: 1px solid #333;
+        }
+
+        .footer-column h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: #777;
+        }
+
+        .footer-column a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: 0.2s;
+        }
+
+        .footer-column a:hover { color: var(--red); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 35px; }
+            .grid-disponibles { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-background">
+    <video autoplay muted loop playsinline id="bgVideo">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+</div>
+
+    <nav class="navbar">
+        <img src="logo1.png" alt="CP Autos UY">
+        <div class="nav-links">
+            <a href="catalogo.html">Catálogo</a>
+            <a href="venta.html">Vender</a>
+            <a href="recomendar.html">¿No sabes que comprar?</a>
+            <a href="https://wa.me/59892984251">Contacto</a>
+        </div>
+    </nav>
+
+    <main class="hero-content">
+        <h2>Bienvenido a la Experiencia</h2>
+        <h1>ELIJE TU AUTO FAVORITO</h1>
+        <a href="catalogo.html" class="btn-discover">
+            Descubrir <span class="arrow">❯</span>
+        </a>
+    </main>
+
+<section class="muro-container">
+    
+    <a href="catalogo.html" class="section-title-link">
+        <h2 class="section-title">Conoce nuestros autos</h2>
+    </a>
+
+    <div class="grid-disponibles">
+    <a href="xx.html" class="muro-item">
+        <img src="Autos/Bmw X3 2013/portada.webp" alt="BMW X3" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">BMW X3</h3>
+                <p class="muro-specs">Motor 2.0 | Año 2013 | 162.763 km</p>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="vwup2019.html" class="muro-item">
+        <img src="Autos/Volkswagen UP 2019/portada.webp" alt="VW Up!" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">VW Up!</h3>
+                <p class="muro-specs">Motor 1.0 | Año 2019 | 167.000 km</p>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="spark.html" class="muro-item">
+        <img src="Autos/Chevrolet Spark 2012/portada.webp" alt="Chevrolet Spark" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">Chevy Spark</h3>
+                <p class="muro-specs">Motor 1.0 | Año 2012 | 177.000 km</p>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="tiggo.html" class="muro-item">
+        <img src="Autos/Chery Tiggo 2019/portada.webp" alt="Chery Tiggo" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">Chery Tiggo</h3>
+                <p class="muro-specs">Motor 1.5 | Año 2019 | 104.000 km</p>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+</div>
+    <h2 class="section-title">Descubre las novedades en Uruguay</h2>
+    
+   <div class="grid-novedades">
+    <a href="Groove2026.html" class="muro-item">
+        <img src="Autos/Chevrolet Groove 2026/portada.webp" alt="Chevrolet Groove" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <h3 class="muro-name">Chevrolet Groove</h3>
+                <p class="muro-specs">Lanzamiento 2026</p>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="pulse.html" class="muro-item">
+        <img src="Autos/Fiat Pulse 2026/portada.webp" alt="Fiat Pulse" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <h3 class="muro-name">Fiat Pulse 2026</h3>
+                <p class="muro-specs">Lanzamiento 2026</p>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="mg3.html" class="muro-item">
+        <img src="Autos/MG3 Hybrid 2026/portada.webp" alt="MG3 Hybrid+" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <h3 class="muro-name">MG3 Hybrid+</h3>
+                <p class="muro-specs">Lanzamiento 2026</p>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+</div>
+
+</section>
+
+    <footer class="footer-minimal">
+        <div class="footer-column">
+            <h3>Comprar</h3>
+            <a href="catalogo.html">Todos los modelos</a>
+            <a href="vendidos.html">Historial de Ventas</a>
+        </div>
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <a href="venta.html">Vende tu Auto</a>
+            <a href="recomendar.html">Recomendador</a>
+        </div>
+        <div class="footer-column">
+            <h3>Experiencia</h3>
+            <a href="nosotros.html">Sobre Nosotros</a>
+        </div>
+        <div class="footer-column">
+            <h3>Legal</h3>
+            <a href="#">Términos y Condiciones</a>
+            <a href="#">Privacidad</a>
+            <div style="margin-top: 20px; font-size: 12px; color: #555;">
+                © 2026 Piñeyro Autos 
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crítica: Fiat Pulse 2026 | Piñeyro Autos</title>
+    <link rel="icon" type="image/png" href="logo1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --red: #ef233c; 
+            --bg-dark: #121212; 
+            --card-dark: #1e1e1e; 
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --border-color: #333333;
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg-dark); 
+            color: var(--text-main); 
+            line-height: 1.8;
+        }
+
+        /* --- NAVBAR (Igual al resto del sitio) --- */
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 5%; 
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid var(--border-color); 
+            position: sticky; top: 0; z-index: 1000; 
+        }
+        .navbar a img { height: 60px; transition: 0.3s; }
+        .nav-links a { 
+            margin-left: 20px; text-decoration: none; color: var(--text-main); 
+            font-weight: 600; font-size: 14px; text-transform: uppercase;
+        }
+
+        /* --- HERO ARTÍCULO --- */
+        .article-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(18,18,18,0.3), var(--bg-dark)), 
+                        url('https://www.megautos.com/wp-content/uploads/2025/05/Fiat_Pulse_Audace_My26_004.jpg') center/cover;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px 5%;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            margin: 0;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .category-tag {
+            background: var(--red);
+            padding: 5px 15px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* --- CONTENIDO --- */
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 5%;
+        }
+
+        .intro-lead {
+            font-size: 20px;
+            color: var(--text-muted);
+            font-weight: 300;
+            border-left: 4px solid var(--red);
+            padding-left: 25px;
+            margin-bottom: 40px;
+        }
+
+        h2 { color: var(--red); text-transform: uppercase; letter-spacing: 1px; margin-top: 50px; }
+
+        .verdict-card {
+            background: var(--card-dark);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin: 40px 0;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .pros h4 { color: #25D366; }
+        .cons h4 { color: var(--red); }
+
+        .rating {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--red);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .pros-cons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="inicio.html"><img src="logo1.png" alt="Piñeyro Autos"></a>
+    <div class="nav-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="https://wa.me/59892984251">Contacto</a>
+    </div>
+</nav>
+
+<header class="article-hero">
+    <div class="hero-content">
+        <span class="category-tag">Crítica Local</span>
+        <h1>Fiat Pulse 2026: <br>Pimienta italiana para el día a día</h1>
+    </div>
+</header>
+
+<main class="article-container">
+    <p class="intro-lead">
+        La Fiat Pulse llegó para romper el molde de los SUVs compactos en Uruguay. No es la más grande, ni la más lujosa, pero tiene un conjunto mecánico que la pone un escalón por encima de varios rivales directos.
+    </p>
+
+    <p>
+        En el competitivo segmento de los B-SUV en Uruguay, la Fiat Pulse 2026 se presenta como la evolución lógica de lo que Fiat sabe hacer bien: autos prácticos, con estilo y, sobre todo, divertidos de conducir. Aunque comparte plataforma con el Argo, las mejoras estructurales y tecnológicas la posicionan como un producto mucho más maduro.
+    </p>
+
+    <h2>Motorización: El as bajo la manga</h2>
+    <p>
+        El motor <strong>T200 (1.0 Turbo)</strong> es, sin dudas, el mejor argumento de venta. Mientras otros competidores en este rango de precio siguen apostando a motores aspirados que sufren en los repechos de nuestras rutas, la Pulse responde con agilidad gracias a sus 120 cv y un torque disponible desde muy bajas vueltas. La combinación con la caja CVT está muy bien lograda, priorizando el consumo pero permitiendo una respuesta rápida cuando se necesita hacer un sobrepaso en la Ruta Interbalnearia.
+    </p>
+
+    <div class="verdict-card">
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>Lo que nos gusta</h4>
+                <ul>
+                    <li>Motor Turbo eficiente y ágil.</li>
+                    <li>Conectividad inalámbrica (Apple CarPlay/Android Auto).</li>
+                    <li>Buen despeje del suelo para nuestras calles.</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>Lo que falta</h4>
+                <ul>
+                    <li>Baúl un poco justo (370 litros reales).</li>
+                    <li>Plásticos interiores mejorables al tacto.</li>
+                    <li>Espacio algo limitado en las plazas traseras.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Interior y Tecnología</h2>
+    <p>
+        Puertas adentro, la Pulse 2026 sorprende por su despliegue tecnológico. La pantalla flotante de 10.1 pulgadas es de las mejores del segmento: rápida, intuitiva y con muy buena definición. El diseño del tablero es moderno, aunque se nota un abuso de plásticos rígidos que, si bien parecen duraderos, le quitan esa sensación "premium" que sí encontramos en competidores más caros.
+    </p>
+
+    <h2>Seguridad en Uruguay</h2>
+    <p>
+        Fiat ha hecho la tarea: 4 airbags de serie, control de tracción y estabilidad, y asistencias a la conducción (ADAS) disponibles en las versiones más equipadas (Impetus). Es un avance significativo, aunque nos gustaría ver los 6 airbags de serie en toda la gama para terminar de redondear una oferta imbatible.
+    </p>
+
+    <div class="verdict-card" style="text-align: center;">
+        <h3 style="margin-top: 0;">VEREDICTO FINAL</h3>
+        <div class="rating">7.8 / 10</div>
+        <p style="color: var(--text-muted);">
+            "La Fiat Pulse 2026 es, posiblemente, la compra más racional para quien busca un SUV compacto en Uruguay hoy. Ofrece el equilibrio justo entre motor moderno, tecnología útil y un diseño que no pasa desapercibido. Es el auto ideal para el usuario urbano que sale a la ruta los fines de semana."
+        </p>
+        <a href="https://wa.me/59892984251" style="color: var(--red); text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 14px;">Consultar stock y precios →</a>
+    </div>
+</main>
+
+<footer>
+    © 2026 Piñeyro Autos - Expertos en el Mercado Automotor Uruguayo
+</footer>
+
+</body>
+</html>

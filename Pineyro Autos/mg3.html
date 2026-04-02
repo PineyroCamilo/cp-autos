@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crítica: MG3 Hybrid Plus 2026 | Piñeyro Autos</title>
+    <link rel="icon" type="image/png" href="logo1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --red: #ef233c; 
+            --bg-dark: #121212; 
+            --card-dark: #1e1e1e; 
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --border-color: #333333;
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg-dark); 
+            color: var(--text-main); 
+            line-height: 1.8;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 5%; 
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid var(--border-color); 
+            position: sticky; top: 0; z-index: 1000; 
+        }
+        .navbar a img { height: 60px; transition: 0.3s; }
+        .nav-links a { 
+            margin-left: 20px; text-decoration: none; color: var(--text-main); 
+            font-weight: 600; font-size: 14px; text-transform: uppercase;
+        }
+
+        /* --- HERO ARTÍCULO --- */
+        .article-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(18,18,18,0.4), var(--bg-dark)), 
+                        url('https://cdn.motor1.com/images/mgl/mME7Kj/s1/all-new-mg3.webp') center/cover;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px 5%;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            margin: 0;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .category-tag {
+            background: #25D366; /* Verde para destacar que es Híbrido */
+            padding: 5px 15px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* --- CONTENIDO --- */
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 5%;
+        }
+
+        .intro-lead {
+            font-size: 20px;
+            color: var(--text-muted);
+            font-weight: 300;
+            border-left: 4px solid var(--red);
+            padding-left: 25px;
+            margin-bottom: 40px;
+        }
+
+        h2 { color: var(--red); text-transform: uppercase; letter-spacing: 1px; margin-top: 50px; }
+
+    .mg3-verdict-card {
+            background-color: #1a1a1a; /* Gris muy oscuro para la tarjeta */
+            color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Sombra sutil para profundidad */
+        }
+
+        /* Estilo para el título superior */
+        .mg3-title {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-weight: bold;
+        }
+
+        /* Estilo para la puntuación grande */
+        .mg3-score {
+            color: #e53935; /* Rojo vibrante */
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        /* Estilo para el texto de la reseña */
+        .mg3-review-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            opacity: 0.9;
+        }
+
+        /* Estilo para el enlace/botón de llamada a la acción */
+        .mg3-cta-link {
+            color: #e53935; /* Rojo link */
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Efecto al pasar el ratón */
+        .mg3-cta-link:hover {
+            opacity: 0.8;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .pros h4 { color: #25D366; }
+        .cons h4 { color: var(--red); }
+
+        .rating {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--red);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="inicio.html"><img src="logo1.png" alt="Piñeyro Autos"></a>
+    <div class="nav-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="https://wa.me/59892984251">Contacto</a>
+    </div>
+</nav>
+
+<header class="article-hero">
+    <div class="hero-content">
+        <span class="category-tag">Híbrido Destacado</span>
+        <h1>MG3 Hybrid Plus: <br>¿La sorpresa del mercado uruguayo?</h1>
+    </div>
+</header>
+
+<main class="article-container">
+<p class="intro-lead">
+El segmento B en Uruguay ha sido, históricamente, el de las decisiones racionales y, a menudo, aburridas. Pero el MG3 Hybrid Plus llega para patear el tablero: no solo es el híbrido autorrecargable más potente del mercado, sino que redefine lo que un usuario puede esperar de un hatchback compacto en términos de elasticidad y respuesta mecánica.
+</p>
+
+<hr>
+
+<h2>Diseño y Evolución: El adiós a la discreción</h2>
+<p>
+    MG (Morris Garages) dejó de ser hace tiempo aquella marca de nicho británica para convertirse en el gigante global de SAIC que es hoy. En esta generación 2026, el MG3 abandona las líneas conservadoras por un lenguaje mucho más agresivo. El frontal, con una parrilla de gran formato y ópticas LED afiladas, no es solo estética: responde a una necesidad de refrigeración superior para un conjunto mecánico que genera mucho más calor que un motor convencional. Con 4.11 metros de largo, se posiciona justo en el corazón del segmento, compitiendo cara a cara con el Toyota Yaris, el Peugeot 208 y el Suzuki Swift.
+</p>
+
+<h2>Análisis Mecánico: La "tercera vía" de la hibridación</h2>
+<p>
+    Aquí es donde el MG3 Hybrid Plus se separa del resto. Mientras que la mayoría de los híbridos del segmento (como el sistema Hybrid Synergy Drive de Toyota) apuestan por cajas e-CVT que priorizan la suavidad pero sacrifican la sensación de aceleración, MG ha desarrollado una arquitectura propia mucho más nerviosa.
+</p>
+
+<h3>1. El conjunto motor</h3>
+<p>
+    Bajo el capó encontramos un motor térmico de 1.5 litros y cuatro cilindros que funciona bajo el ciclo Atkinson, optimizado para la eficiencia térmica. Este motor entrega por sí solo 102 cv. Sin embargo, el verdadero protagonista es el motor eléctrico de 100 kW (136 cv). 
+</p>
+<blockquote>
+    <strong>Dato clave:</strong> A diferencia de otros sistemas donde el motor eléctrico es solo un asistente, aca el motor eléctrico es más potente que el de combustión. Esto permite que el auto se comporte como un eléctrico puro en el 80% de las situaciones urbanas.
+</blockquote>
+
+<h3>2. La innovadora transmisión de 3 velocidades (DHT)</h3>
+<p>
+    MG implementa una caja automática de tres marchas físicas (Dedicated Hybrid Transmission). ¿Por qué tres y no seis o una CVT? Porque al tener un motor eléctrico tan torqueador, no se necesitan tantas relaciones. 
+</p>
+<ul>
+    <li><strong>Primera marcha:</strong> Se encarga de las salidas de parado y bajas velocidades, trabajando en conjunto con el motor eléctrico para una respuesta inmediata.</li>
+    <li><strong>Segunda marcha:</strong> Optimiza las recuperaciones de media velocidad (el clásico sobrepaso en ruta).</li>
+    <li><strong>Tercera marcha:</strong> Actúa como una sobremarcha para cruceros en carretera, permitiendo que el motor térmico trabaje a bajas vueltas.</li>
+</ul>
+<p>
+    El resultado son 194 cv (143 kW) de potencia combinada y un torque que se siente presente desde el primer milímetro del acelerador. El 0 a 100 km/h en 8 segundos lo deja solo en su categoría; para encontrar algo similar, habría que subir dos escalones de precio.
+</p>
+
+<h3>3. Capacidad de batería y recuperación</h3>
+<p>
+    La batería de iones de litio tiene una capacidad de 1,83 kWh, casi el doble de lo que ofrecen sus competidores directos. Esto se traduce en una mayor autonomía en modo EV (eléctrico) y, sobre todo, en una capacidad de regeneración más agresiva durante las frenadas.
+<div class="verdict-card">
+    <div class="pros-cons">
+        <div class="pros">
+            <h4>Lo que nos gusta</h4>
+            <ul>
+                <li><strong>Empuje contundente:</strong> La sensación de torque es equivalente a un motor turbo de mayor cilindrada.</li>
+                <li><strong>Eficiencia en Uruguay:</strong> Lograr consumos de 4.2 L/100km en el tránsito de Montevideo es una realidad, no una cifra de catálogo.</li>
+                <li><strong>Ciclo de carga:</strong> La gestión de la batería es sumamente inteligente; rara vez sentirás el auto vacío de energía.</li>
+                <li><strong>Beneficio Impositivo:</strong> Gracias a la ley de promoción de vehículos eficientes, el IMESI reducido lo coloca en un precio de venta al público que canibaliza a los competidores nafteros.</li>
+            </ul>
+        </div>
+        <div class="cons">
+            <h4>Lo que nos genera dudas</h4>
+            <ul>
+                <li><strong>Neumático de auxilio:</strong> La presencia del paquete de baterías bajo el piso del baúl obliga a prescindir de una rueda de auxilio de tamaño homogéneo.</li>
+                <li><strong>Tacto del freno:</strong> Como en todo híbrido con frenada regenerativa, el pedal tiene una transición algo artificial entre el freno eléctrico y el hidráulico.</li>
+                <li><strong>Plazas traseras:</strong> El túnel central y el espacio para rodillas son correctos para niños, pero dos adultos altos en un viaje a Rocha irán algo penalizados.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h2>Comportamiento Dinámico: ¿Cómo va en nuestras calles?</h2>
+<p>
+    Uruguay no es Alemania; nuestras rutas tienen parches, ondulaciones y el clásico asfalto rugoso. MG ha calibrado la suspensión del MG3 con un esquema McPherson delantero y barra de torsión trasera, pero con un seteo sorprendentemente firme, el auto se siente bastante plantado en las curvas rápidas. 
+</p>
+<p>
+    La dirección tiene asistencia eléctrica variable. En modo Eco es sumamente liviana, mientras que en modo Sport gana el peso necesario para transmitir confianza a velocidades de crucero. La insonorización es otro punto alto: al circular en modo eléctrico, el silencio es absoluto, y cuando entra el motor térmico, lo hace sin las vibraciones toscas de los motores de tres cilindros de la competencia.
+</p>
+
+<h2>Interior, Tecnología y Seguridad</h2>
+<p>
+    Puertas adentro, MG dio un salto en calidad percibida. El tablero digital de 7 pulgadas es claro y ofrece telemetría del flujo de energía en tiempo real. La pantalla central de 10.25 pulgadas es el cerebro del auto. La mayoría de los controles son táctiles (algo que no nos gusta mucho), la respuesta del procesador es rápida y sin lag.
+</p>
+<p>
+    En seguridad, la unidad que llega a Uruguay viene con todo: 6 airbags, control de estabilidad y tracción de serie, y el paquete MG Pilot (ADAS) que incluye frenado autónomo de emergencia, control de crucero adaptativo y mantenimiento de carril. 
+</p>
+
+<hr>
+
+<div class="mg3-verdict-card">
+        <div class="mg3-title">Veredicto Final</div>
+        <div class="mg3-score">8.5 / 10</div>
+        <p class="mg3-review-text">
+            "El MG3 Hybrid Plus no es solo eficiencia, es performance. Con su potente motor eléctrico y caja de tres marchas que entienden cuándo necesitas potencia, es el nuevo referente dinámico de la clase media uruguaya."
+        </p>
+       
+    </div>
+</main>
+
+<footer>
+    © 2026 Piñeyro Autos - Especialistas en Movilidad Híbrida y Eléctrica
+</footer>
+
+</body>
+</html>

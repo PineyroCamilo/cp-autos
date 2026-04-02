@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piñeyro Autos | Catálogo</title>
+    <link rel="icon" type="image/png" href="logo.jpeg"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --red: #ef233c; 
+            --red-hover: #d90429;
+            --green: #25D366; 
+            /* Paleta Híbrida Premium */
+            --bg-main: #f5f5f7; /* Gris muy claro para el fondo */
+            --bg-dark: #0a0a0a; /* Negro puro para mantener la marca */
+            --card-bg: #ffffff; /* Blanco para tarjetas y filtros */
+            --border-color: #e5e5ea;
+            --text-main: #1d1d1f; /* Gris oscuro para lectura */
+            --text-light: #ffffff; /* Blanco para zonas negras */
+            --text-muted: #86868b;
+            --shadow: 0 8px 24px rgba(0,0,0,0.06);
+            --glass-dark: rgba(10, 10, 10, 0.85); 
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg-main); 
+            color: var(--text-main);
+            scroll-behavior: smooth; 
+            line-height: 1.6;
+        }
+
+        /* --- NAVBAR ESTILO PREMIUM (Mantiene el negro) --- */
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 5%; 
+            background: var(--glass-dark);
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        
+        .navbar a img { 
+            height: 80px; 
+            display: block;
+            transition: 0.3s; 
+        }
+
+        .navbar a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links { display: flex; align-items: center; }
+        
+        .nav-links a { 
+            margin-left: 20px; 
+            text-decoration: none; 
+            color: var(--text-light); 
+            font-weight: 600; 
+            font-size: 14px;
+            cursor: pointer; 
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-links a:hover { color: var(--red); }
+
+        /* --- MENÚ DESPLEGABLE OSCURO --- */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        
+        .dropbtn {
+            background-color: transparent;
+            color: var(--text-light);
+            font-weight: 700;
+            font-size: 14px;
+            border: 2px solid var(--text-light);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s;
+        }
+        
+        .dropbtn:hover { 
+            color: var(--red); 
+            border-color: var(--red);
+        }
+        
+        /* El contenedor del menú */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%; /* Pegado al botón */
+            background-color: var(--bg-dark);
+            min-width: 220px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 10px; /* Un pequeño aire visual */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* PUENTE INVISIBLE: Esto evita que se cierre al mover el mouse */
+        .dropdown-content::before {
+            content: '';
+            position: absolute;
+            top: -15px; /* Cubre el hueco del margin-top */
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: transparent;
+        }
+
+        .dropdown-content a {
+            color: var(--text-light);
+            padding: 16px 20px; 
+            text-decoration: none;
+            display: block;
+            font-size: 14px; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        
+        .dropdown-content a:last-child { border-bottom: none; }
+        
+        .dropdown-content a:hover {
+            background-color: #1a1a1a;
+            color: var(--red);
+            padding-left: 25px; 
+        }
+        
+        /* Activa el menú y la animación */
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* --- SECCIONES DE INFORMACIÓN --- */
+        .info-section { 
+            display: none; 
+            padding: 60px 5%; 
+            background: var(--card-bg); 
+            border-bottom: 4px solid var(--red);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 999;
+        }
+        
+        .info-section.active { display: block; animation: slideDown 0.4s ease-out; }
+
+        /* --- HERO --- */
+        .hero { 
+            background: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), 
+                        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80') center/cover; 
+            height: 400px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light); 
+            padding: 0 20px;
+        }
+        
+        .hero h1 { 
+            font-size: clamp(28px, 5vw, 48px); 
+            max-width: 800px; 
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container { 
+            display: flex; 
+            flex-direction: row;
+            gap: 30px; 
+            padding: 40px 5%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+
+        /* --- SIDEBAR DE FILTROS --- */
+        .filters { 
+            width: 260px; 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 12px; 
+            height: fit-content; 
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 120px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .filters h3 { 
+            margin-top: 0; 
+            font-size: 18px; 
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 15px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+        
+        details { 
+            margin-bottom: 10px; 
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 10px; 
+        }
+        
+        summary { 
+            font-weight: 600; 
+            cursor: pointer; 
+            padding: 5px 0; 
+            outline: none; 
+            color: var(--text-main);
+        }
+        
+        .filter-btn { 
+            display: block; 
+            width: 100%; 
+            text-align: left; 
+            background: none; 
+            border: none; 
+            padding: 10px 5px; 
+            cursor: pointer; 
+            color: var(--text-muted); 
+            transition: all 0.25s ease; 
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .filter-btn:hover { 
+            background: rgba(239, 35, 60, 0.08);
+            color: var(--red); 
+            padding-left: 12px; 
+            border-radius: 6px;
+        }
+        
+        .main-content { flex: 1; }
+        
+        /* --- BARRA DE BÚSQUEDA --- */
+        .search-bar { 
+            width: 100%; 
+            padding: 18px 25px; 
+            border-radius: 50px; 
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color); 
+            margin-bottom: 30px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .search-bar::placeholder { color: var(--text-muted); }
+        .search-bar:focus { border-color: var(--red); box-shadow: 0 0 0 4px rgba(239, 35, 60, 0.1); }
+
+        /* --- GRILLA DE AUTOS --- */
+        .cars { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* --- ESTILO DE TARJETAS TIPO MURO --- */
+        .muro-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            display: block;
+            height: 320px; 
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+
+        .muro-item:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
+        }
+
+        .muro-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .muro-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .muro-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            /* Degradado negro puro para que el texto resalte perfecto y mantenga el estilo oscuro */
+            background: linear-gradient(transparent, rgba(0,0,0,0.95)); 
+            padding: 25px 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .muro-tag {
+            background: var(--red);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 10px;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        .muro-name {
+            margin: 0;
+            font-size: 22px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .muro-specs {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .price { 
+            color: #fff; 
+            font-weight: 700; 
+            font-size: 20px; 
+            margin-top: 8px; 
+            display: block;
+        }
+
+        .muro-arrow {
+            color: #fff;
+            font-size: 24px;
+            transition: 0.3s;
+            margin-bottom: 5px;
+        }
+
+        .muro-item:hover .muro-arrow {
+            transform: translateX(5px);
+            color: var(--red);
+        }
+
+        /* --- FOOTER INSPIRADO EN FERRARI (Negro puro) --- */
+        .footer-minimal {
+            background: var(--bg-dark); 
+            padding: 80px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            border-top: 1px solid #222;
+            margin-top: 60px;
+        }
+        
+        .footer-column h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: #888;
+        }
+        
+        .footer-column a {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: 0.2s;
+        }
+        
+        .footer-column a:hover { color: var(--red); }
+
+        /* --- BOTONES --- */
+        .btn-wa { 
+            background: var(--green); 
+            color: white; 
+            padding: 12px 25px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            display: inline-block; 
+            font-weight: 600; 
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .btn-wa:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+        /* --- WHATSAPP FLOTANTE --- */
+        .whatsapp-float { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            background: var(--green); 
+            width: 60px;
+            height: 60px;
+            border-radius: 50%; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25); 
+            z-index: 1000; 
+            transition: 0.3s;
+        }
+        
+        .whatsapp-float:hover { transform: scale(1.1) rotate(10deg); }
+        .whatsapp-float img { width: 35px; height: 35px; } 
+
+        /* --- RESPONSIVIDAD (CELULARES) --- */
+        @media (max-width: 768px) {
+            .container { flex-direction: column; padding: 20px; }
+            .filters { width: 100%; position: static; box-sizing: border-box; margin-bottom: 20px; }
+            .navbar { padding: 10px 20px; flex-wrap: wrap; }
+            .nav-links { margin-top: 15px; width: 100%; justify-content: center; flex-wrap: wrap; gap: 15px; }
+            .nav-links a { margin-left: 0; font-size: 12px; }
+            .dropdown { margin-left: 0; }
+            .hero { height: 250px; }
+            .hero h1 { font-size: 24px; }
+            .cars { grid-template-columns: 1fr; } 
+        }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+   <a href="inicio.html">
+        <img src="logo1.png" alt="Piñeyro Autos">
+    </a>
+    <div class="nav-links">
+        <a onclick="showSection('comprar')">Comprar</a>
+        <a href="venta.html">Vender</a>
+        <a href="recomendar.html" style="color: var(--red);">¿No sabes qué comprar?</a> 
+        <a href="https://wa.me/59892984251">Contacto</a>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Menú ▼</button>
+            <div class="dropdown-content">
+                <a onclick="showSection('comprar')">Comprar</a>
+                <a href="venta.html">Vender</a>
+                <a href="recomendar.html">¿No sabes qué comprar?</a>
+                <a href="https://wa.me/59892984251">Contacto</a>
+                <a href="vendidos.html" style="color: var(--red); font-weight: 700;">★ Vendidos</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div id="section-comprar" class="info-section">
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2>¿Cómo comprar en Piñeyro Autos?</h2>
+        <p style="color: var(--text-muted); margin-bottom: 30px;">Hacemos que la compra de tu próximo vehículo sea segura y transparente:</p>
+        <div style="text-align: left; display: inline-block;">
+            <p style="margin-bottom: 15px;">✅ <strong>Busca:</strong> Elegís el auto que más te guste de nuestro catálogo.</p>
+            <p style="margin-bottom: 15px;">✅ <strong>Lo ves:</strong> Coordinamos una visita en nuestro punto de encuentro seguro.</p>
+            <p style="margin-bottom: 15px;">✅ <strong>Chequeas:</strong> Revisión mecánica permitida.</p>
+            <p style="margin-bottom: 25px;">✅ <strong>Compras:</strong> Ahora te toca disfrutar.</p>
+        </div>
+        <br>
+        <button onclick="closeSections()" style="padding:10px 25px; border-radius:50px; border:2px solid var(--text-main); font-weight: 600; cursor:pointer; background:transparent; color: var(--text-main); transition: 0.3s;">Cerrar ✕</button>
+    </div>
+</div>
+
+<header class="hero">
+    <h1>Encontrá tu próximo auto</h1>
+</header>
+
+<div class="container">
+    <aside class="filters">
+        <h3>Filtros Rápidos</h3>
+
+        <details>
+            <summary>Marcas</summary>
+            <button class="filter-btn" onclick="filterBy('Audi')">Audi</button>
+            <button class="filter-btn" onclick="filterBy('BMW')">BMW</button>
+            <button class="filter-btn" onclick="filterBy('Chery')">Chery</button>
+            <button class="filter-btn" onclick="filterBy('Chevrolet')">Chevrolet</button>
+            <button class="filter-btn" onclick="filterBy('Fiat')">Fiat</button>
+            <button class="filter-btn" onclick="filterBy('Ford')">Ford</button>
+            <button class="filter-btn" onclick="filterBy('Nissan')">Nissan</button>
+            <button class="filter-btn" onclick="filterBy('Peugeot')">Peugeot</button>
+            <button class="filter-btn" onclick="filterBy('Renault')">Renault</button>
+            <button class="filter-btn" onclick="filterBy('Suzuki')">Suzuki</button>
+            <button class="filter-btn" onclick="filterBy('Toyota')">Toyota</button>
+            <button class="filter-btn" onclick="filterBy('Volkswagen')">Volkswagen</button>
+        </details>
+
+        <details>
+            <summary>Combustible</summary>
+            <button class="filter-btn" onclick="filterBy('Nafta')">Nafta</button>
+            <button class="filter-btn" onclick="filterBy('Diésel')">Diésel</button>
+            <button class="filter-btn" onclick="filterBy('Eléctrico')">Eléctrico</button>
+            <button class="filter-btn" onclick="filterBy('Híbrido')">Híbrido</button>
+        </details>
+
+        <div style="margin-top:20px;">
+            <label style="font-weight: 600; font-size: 14px; color: var(--text-main);">
+                Precio Máx: USD <span id="priceValue">50000</span>
+            </label>
+            <input 
+                type="range" 
+                id="priceRange" 
+                min="3000" 
+                max="50000" 
+                step="500" 
+                value="50000" 
+                oninput="applyFilters()"
+                style="width: 100%; margin-top:10px; accent-color: var(--red);">
+        </div>
+
+        <button onclick="resetFilters()" style="color:var(--red); font-weight:bold; background:none; border:none; cursor:pointer; padding:20px 0 0 0; width:100%; text-align:center; transition: 0.2s;">
+            Limpiar Filtros
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Busca por marca, modelo o año..." onkeyup="applyFilters()">
+        
+       <div class="cars" id="carContainer">
+    <a href="xx.html" class="car muro-item">
+        <img src="Autos/Bmw X3 2013/portada.webp" alt="BMW X3" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">BMW X3</h3>
+                <p class="muro-specs">Motor 2.0 | Año 2013 | 162.763 km</p>
+                <span class="price">USD 23.890</span>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="vwup2019.html" class="car muro-item">
+        <img src="Autos/Volkswagen UP 2019/portada.webp" alt="VW Up!" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">Volkswagen Up!</h3>
+                <p class="muro-specs">Motor 1.0 | Año 2019 | 167.000 km</p>
+                <span class="price">USD 10.190</span>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="spark.html" class="car muro-item">
+        <img src="Autos/Chevrolet Spark 2012/portada.webp" alt="Chevrolet Spark" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">Chevrolet Spark</h3>
+                <p class="muro-specs">Motor 1.0 | Año 2012 | 177.000 km</p>
+                <span class="price">USD 6.290</span>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+
+    <a href="tiggo.html" class="car muro-item">
+        <img src="Autos/Chery Tiggo 2019/portada.webp" alt="Chery Tiggo" loading="lazy">
+        <div class="muro-overlay">
+            <div class="muro-text-content">
+                <span class="muro-tag">Disponible</span>
+                <h3 class="muro-name">Chery Tiggo</h3>
+                <p class="muro-specs">Motor 1.5 | Año 2019 | 104.000 km</p>
+                <span class="price">USD 12.350</span>
+            </div>
+            <span class="muro-arrow">→</span>
+        </div>
+    </a>
+</div>
+
+        <div id="noResults" style="display:none; text-align:center; padding:60px 20px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:15px; box-shadow: var(--shadow);">
+            <p style="font-size:24px; font-weight:700; color: var(--text-main); margin-top: 0;">No encontramos ese vehículo...</p>
+            <p style="color:var(--text-muted); margin-bottom:25px;">Pero podemos buscarlo por vos en nuestra red de contactos.</p>
+            <a href="https://wa.me/59892984251" class="btn-wa">Consultar por WhatsApp</a>
+        </div>
+    </main>
+</div>
+
+<footer class="footer-minimal">
+    <div class="footer-column">
+        <h3>Comprar</h3>
+        <a href="catalogo.html">Todos los modelos</a>
+        <a href="vendidos.html">Historial de Ventas</a>
+    </div>
+    <div class="footer-column">
+        <h3>Servicios</h3>
+        <a href="venta.html">Vende tu Auto</a>
+        <a href="recomendar.html">Recomendador</a>
+      
+    </div>
+    <div class="footer-column">
+        <h3>Experiencia</h3>
+        <a href="nosotros.html">Sobre Nosotros</a>
+      
+    </div>
+    <div class="footer-column">
+        <h3>Legal</h3>
+        <a href="#">Términos y Condiciones</a>
+        <a href="#">Privacidad</a>
+        <div style="margin-top: 20px; font-size: 12px; color: #555;">
+            © 2026 Piñeyro Autos 
+        </div>
+    </div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/59892984251" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</a>
+
+<script>
+    // Seteo inicial del rango de precio (movido desde el CSS a donde pertenece)
+    document.addEventListener("DOMContentLoaded", () => {
+        const range = document.getElementById("priceRange");
+        const value = document.getElementById("priceValue");
+        if(range && value) {
+            value.innerText = range.value;
+        }
+    });
+
+    // FUNCIONES DE SECCIONES
+    function showSection(id) {
+        closeSections();
+        document.getElementById('section-' + id).classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    
+    function closeSections() {
+        document.querySelectorAll('.info-section').forEach(s => s.classList.remove('active'));
+    }
+
+    // LÓGICA DE FILTROS
+    function applyFilters() {
+        const searchInput = document.getElementById("searchInput");
+        const priceRange = document.getElementById("priceRange");
+        
+        if (!searchInput || !priceRange) return;
+
+        const text = searchInput.value.toLowerCase();
+        const maxPrice = parseInt(priceRange.value);
+        document.getElementById("priceValue").innerText = maxPrice;
+
+        const carContainer = document.getElementById("carContainer");
+        const noResults = document.getElementById("noResults");
+        let hasResults = false;
+
+        document.querySelectorAll(".car").forEach(car => {
+            // Buscamos el precio dentro del span con clase .price
+            const priceElement = car.querySelector(".price");
+            let price = 0;
+            
+            if (priceElement) {
+                const priceText = priceElement.innerText.replace(/\D/g, "");
+                price = parseInt(priceText);
+            }
+
+            const matchesText = car.textContent.toLowerCase().includes(text);
+            const matchesPrice = price <= maxPrice;
+
+            if (matchesText && matchesPrice) {
+                car.style.display = "block";
+                hasResults = true;
+            } else {
+                car.style.display = "none";
+            }
+        });
+
+        noResults.style.display = hasResults ? "none" : "block";
+        carContainer.style.display = hasResults ? "grid" : "none";
+    }
+
+    function filterBy(brand) {
+        document.getElementById("searchInput").value = brand;
+        applyFilters();
+    }
+
+    function resetFilters() {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("priceRange").value = 50000;
+        applyFilters();
+    }
+</script>
+</body>
+</html>

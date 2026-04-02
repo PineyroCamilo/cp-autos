@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piñeyro Autos | Catálogo</title>
+<link rel="icon" type="image/png" href="logo.jpeg"> 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root { 
+        --brand-red: #D90429; 
+        --brand-red-hover: #b90322;
+        --brand-green: #128C7E; 
+        --text-main: #111111; 
+        --text-muted: #666666;
+        --bg-body: #FAFAFA;
+        --bg-card: #FFFFFF;
+        --border-color: #EAEAEA;
+        /* Nuevas variables para el Navbar Oscuro */
+        --nav-bg: #1A1A1D;
+        --nav-border: #2D2D30;
+        --nav-text: #D1D1D5;
+    }
+
+    body { 
+        margin: 0; 
+        font-family: 'Inter', sans-serif; 
+        background: var(--bg-body); 
+        color: var(--text-main);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- NAVBAR MINIMALISTA OSCURO --- */
+    .navbar { 
+        display: flex; justify-content: space-between; align-items: center; 
+        padding: 20px 5%; background: var(--nav-bg);
+        border-bottom: 1px solid var(--nav-border); 
+        position: sticky; top: 0; z-index: 1000; 
+    }
+    .navbar img { height: 40px; }
+    .nav-links a { 
+        margin-left: 20px; text-decoration: none; color: var(--nav-text); 
+        font-weight: 500; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; transition: 0.2s;
+    }
+    .nav-links a:hover { color: var(--brand-red); }
+
+    /* --- HERO CLEAN --- */
+    .hero-venta {
+        background: var(--text-main);
+        color: white; padding: 80px 20px; text-align: center;
+    }
+    .hero-venta h1 { font-size: clamp(32px, 5vw, 48px); margin: 0; font-weight: 700; letter-spacing: -1px; }
+    .hero-venta p { color: #A0A0A0; font-size: 18px; margin-top: 15px; font-weight: 300; }
+
+    /* --- CONTENEDOR PRINCIPAL --- */
+    .dashboard {
+        max-width: 1100px; margin: -40px auto 60px; padding: 0 20px;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        position: relative; z-index: 10;
+    }
+
+    /* --- TARJETAS SÓLIDAS --- */
+    .card {
+        background: var(--bg-card); border-radius: 12px; padding: 40px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid var(--border-color);
+    }
+
+    .card h2 { margin-top: 0; font-size: 22px; color: var(--text-main); display: flex; align-items: center; gap: 12px; font-weight: 600; letter-spacing: -0.5px; }
+    .badge { background: #FDE8EA; color: var(--brand-red); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+
+    /* --- FORMULARIOS --- */
+    .input-group { margin-bottom: 24px; }
+    .input-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modern-input {
+        width: 100%; padding: 14px 16px; border-radius: 8px; border: 1px solid #D1D5DB;
+        background: #FFFFFF; font-size: 15px; font-family: 'Inter', sans-serif; color: var(--text-main);
+        box-sizing: border-box; transition: all 0.2s ease; outline: none;
+    }
+    .modern-input:focus { border-color: var(--text-main); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.05); }
+    
+    /* --- BOTONES --- */
+    .btn-primary {
+        width: 100%; padding: 16px; border: none; border-radius: 8px;
+        background: var(--text-main); color: white; font-size: 14px; font-weight: 600;
+        cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .btn-primary:hover { background: #333333; }
+
+    /* --- LOADER --- */
+    .loader-container { display: none; text-align: center; padding: 50px 0; }
+    .spinner {
+        width: 40px; height: 40px; border: 3px solid #F3F4F6; border-top: 3px solid var(--text-main);
+        border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px;
+    }
+    .loading-text { font-size: 14px; font-weight: 500; color: var(--text-muted); animation: pulse 1.5s infinite; }
+
+    /* --- RESULTADOS --- */
+    .result-box { display: none; text-align: center; animation: fadeIn 0.4s ease-out; }
+    .price-range { font-size: 36px; font-weight: 700; color: var(--text-main); margin: 10px 0; letter-spacing: -1px; }
+    .price-range span { color: var(--brand-red); }
+    
+    .btn-wa {
+        background: var(--brand-green); color: white; padding: 16px 24px; text-decoration: none;
+        border-radius: 8px; display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px;
+        margin-top: 20px; transition: 0.2s; width: 100%; justify-content: center; box-sizing: border-box;
+    }
+    .btn-wa:hover { background: #0F7A6E; }
+
+    .btn-reset { background: none; border: none; color: var(--text-muted); font-size: 13px; font-weight: 500; margin-top: 20px; cursor: pointer; text-decoration: underline; transition: 0.2s; }
+    .btn-reset:hover { color: var(--text-main); }
+
+    /* --- CALCULADORA COMISIÓN --- */
+    .calc-result {
+        background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 8px;
+        padding: 24px; text-align: center; margin-top: 20px; transition: 0.3s;
+    }
+    .calc-result.active { border-color: var(--brand-green); background: #F6FCFA; }
+    .calc-total { font-size: 32px; font-weight: 700; color: var(--brand-green); margin: 5px 0 0 0; letter-spacing: -1px;}
+
+    /* --- LISTA BENEFICIOS --- */
+    .benefits-list { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-muted); }
+    .benefits-list li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
+    .benefits-list li span { color: var(--text-main); font-weight: bold; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        .dashboard { grid-template-columns: 1fr; margin-top: -20px; gap: 20px; }
+        .hero-venta { padding: 50px 20px; }
+        .card { padding: 30px 20px; }
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+   <a href="inicio.html">
+        <img src="logo1.png" alt="Piñeyro Autos">
+    </a>
+
+    <div class="nav-links">
+        <a href="inicio.html">← Volver</a>
+    </div>
+</nav>
+
+<header class="hero-venta">
+    <h1>Cotizá y vendé hoy</h1>
+    <p>Tecnología, transparencia y la comisión más clara del mercado.</p>
+</header>
+
+<div class="dashboard">
+    <div class="card">
+        <h2>Valor de Mercado <span class="badge">Inteligencia Artificial</span></h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">Ingresá los datos de tu vehículo y obtené un rango estimado de venta al público.</p>
+
+        <form id="formTasador" onsubmit="iniciarTasacion(event)">
+            <div class="input-group">
+                <label>Marca</label>
+                <select id="tasMarca" class="modern-input" required>
+                    <option value="" disabled selected>Seleccioná una marca...</option>
+                    <option value="Audi">Audi</option>
+                    <option value="BMW">BMW</option>
+                    <option value="BYD">BYD</option>
+                    <option value="Changan">Changan</option>
+                    <option value="Chery">Chery</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="Citroën">Citroën</option>
+                    <option value="DFSK">DFSK</option>
+                    <option value="Dongfeng">Dongfeng</option>
+                    <option value="Fiat">Fiat</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Geely">Geely</option>
+                    <option value="Great Wall">Great Wall</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="JAC">JAC</option>
+                    <option value="Jetour">Jetour</option>
+                    <option value="JMC">JMC</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Lifan">Lifan</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="MG">MG</option>
+                    <option value="Mini">Mini</option>
+                    <option value="Mitsubishi">Mitsubishi</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Peugeot">Peugeot</option>
+                    <option value="Porsche">Porsche</option>
+                    <option value="Renault">Renault</option>
+                    <option value="Seat">Seat</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Suzuki">Suzuki</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Volvo">Volvo</option>
+                    <option value="Otra">Otra marca</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>Modelo y Versión</label>
+                <input type="text" id="tasModelo" class="modern-input" placeholder="Ej: Onix 1.0 LTZ / 208 1.6 Active" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="input-group">
+                    <label>Año</label>
+                    <input type="number" id="tasAnio" class="modern-input" placeholder="Ej: 2018" min="1990" max="2026" required>
+                </div>
+                <div class="input-group">
+                    <label>Kilómetros</label>
+                    <input type="number" id="tasKm" class="modern-input" placeholder="Ej: 65000" min="0" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Calcular Estimación</button>
+        </form>
+
+        <div id="pantallaCarga" class="loader-container">
+            <div class="spinner"></div>
+            <div id="textoCarga" class="loading-text">Consultando base de datos...</div>
+        </div>
+
+        <div id="pantallaResultado" class="result-box">
+            <h3 style="color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin:0;">Valor Estimado</h3>
+            <div class="price-range" id="resultadoRango"><span>USD 0</span> - <span>USD 0</span></div>
+            
+            <p id="nivelConfianzaHTML" style="font-size: 12px; color: #9ca3af; margin-bottom: 5px;"></p>
+            <p id="insightHTML" style="font-weight: 500; color: var(--text-main); font-size: 13px; margin-bottom: 20px;"></p>
+            
+            <div style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 6px; text-align: left;">
+                <p style="margin: 0; color: var(--text-muted); font-size: 12px; line-height: 1.5;">
+                    *Valor de referencia algorítmico. Para el precio final exacto necesitamos revisar el estado real de la unidad.
+                </p>
+            </div>
+            
+            <a id="btnWhatsappTasacion" href="#" class="btn-wa" target="_blank">
+                Agendar valuación exacta
+            </a>
+            <button onclick="reiniciarTasador()" class="btn-reset">
+                Cotizar otro vehículo
+            </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Números Claros <span class="badge" style="background:#EBF7F5; color:var(--brand-green);">Comisión Fija</span></h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">Cobramos un <strong>4% + IVA</strong> solo si vendemos tu auto. Sin sorpresas.</p>
+
+        <div class="input-group">
+            <label>Precio de Venta (USD)</label>
+            <input type="number" id="inputPrecio" class="modern-input" placeholder="Ingresá a cuánto querés venderlo" oninput="calcularGanancia()">
+        </div>
+
+        <div class="calc-result" id="cajaResultado">
+            <span style="font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Te llevás libre de gastos</span>
+            <div class="calc-total" id="txtTotal">USD 0</div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <h4 style="margin: 0 0 20px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-main);">El servicio incluye</h4>
+            <ul class="benefits-list">
+                <li><span>📸</span> Fotos profesionales de la unidad.</li>
+                <li><span>📢</span> Destacados en MercadoLibre y redes.</li>
+                <li><span>💬</span> Gestión total de consultas.</li>
+                <li><span>🤝</span> Filtro de curiosos (solo compradores reales).</li>
+                <li><span>📅</span> Coordinación y exhibición segura.</li>
+                <li><span>💰</span> Negociación para el mejor precio.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calcularGanancia() {
+        const input = document.getElementById("inputPrecio").value;
+        const caja = document.getElementById("cajaResultado");
+        const txtTotal = document.getElementById("txtTotal");
+        
+        if (input > 0) {
+            const total = input - (input * 0.04 * 1.22);
+            txtTotal.innerText = "USD " + Math.round(total).toLocaleString('es-UY');
+            caja.classList.add('active');
+        } else {
+            txtTotal.innerText = "USD 0";
+            caja.classList.remove('active');
+        }
+    }
+
+    function iniciarTasacion(event) {
+        event.preventDefault(); 
+        
+        document.getElementById("formTasador").style.display = "none";
+        document.getElementById("pantallaCarga").style.display = "block";
+        document.getElementById("pantallaResultado").style.display = "none";
+        
+        const textos = ["Analizando mercado...", "Procesando historial...", "Ajustando equipamiento...", "Calculando depreciación..."];
+        let i = 0;
+        const intervalo = setInterval(() => {
+            i++;
+            if (i < textos.length) {
+                document.getElementById("textoCarga").innerText = textos[i];
+            }
+        }, 600);
+
+        setTimeout(() => {
+            clearInterval(intervalo);
+            mostrarResultado();
+        }, 2500);
+    }
+
+    function reiniciarTasador() {
+        document.getElementById("formTasador").reset();
+        document.getElementById("pantallaResultado").style.display = "none";
+        document.getElementById("formTasador").style.display = "block";
+        document.getElementById("textoCarga").innerText = "Consultando base de datos...";
+    }
+
+    const MERCADO_UY = {
+        marcas: {
+            "Audi": { retencion: 0.83, repuestos: 0.85, seg: "Premium" },
+            "BMW": { retencion: 0.84, repuestos: 0.85, seg: "Premium" },
+            "BYD": { retencion: 0.88, repuestos: 0.95, seg: "Generalista" },
+            "Changan": { retencion: 0.83, repuestos: 0.90, seg: "Generalista" },
+            "Chery": { retencion: 0.82, repuestos: 0.92, seg: "Entrada" },
+            "Chevrolet": { retencion: 0.89, repuestos: 1.05, seg: "Generalista" },
+            "Citroën": { retencion: 0.84, repuestos: 0.92, seg: "Generalista" },
+            "Fiat": { retencion: 0.87, repuestos: 1.05, seg: "Generalista" },
+            "Ford": { retencion: 0.86, repuestos: 0.95, seg: "Generalista" },
+            "Honda": { retencion: 0.91, repuestos: 0.95, seg: "SemiPremium" },
+            "Hyundai": { retencion: 0.89, repuestos: 1.0, seg: "Generalista" },
+            "JAC": { retencion: 0.82, repuestos: 0.90, seg: "Generalista" },
+            "Jeep": { retencion: 0.86, repuestos: 0.90, seg: "SemiPremium" },
+            "Jetour": { retencion: 0.83, repuestos: 0.90, seg: "Generalista" },
+            "Kia": { retencion: 0.89, repuestos: 1.0, seg: "Generalista" },
+            "Mazda": { retencion: 0.88, repuestos: 0.90, seg: "SemiPremium" },
+            "Mercedes-Benz": { retencion: 0.85, repuestos: 0.85, seg: "Premium" },
+            "Mitsubishi": { retencion: 0.88, repuestos: 0.90, seg: "SemiPremium" },
+            "Nissan": { retencion: 0.89, repuestos: 1.0, seg: "Generalista" },
+            "Peugeot": { retencion: 0.85, repuestos: 0.92, seg: "Generalista" },
+            "Renault": { retencion: 0.86, repuestos: 1.0, seg: "Generalista" },
+            "Subaru": { retencion: 0.87, repuestos: 0.85, seg: "SemiPremium" },
+            "Suzuki": { retencion: 0.91, repuestos: 1.05, seg: "Generalista" },
+            "Toyota": { retencion: 0.93, repuestos: 1.05, seg: "SemiPremium" },
+            "Volkswagen": { retencion: 0.90, repuestos: 1.05, seg: "Generalista" },
+            "Volvo": { retencion: 0.84, repuestos: 0.85, seg: "Premium" }
+        },
+        segmentosBase: {
+            "Entrada": { precio: 14000, piso: 4000 },
+            "Generalista": { precio: 22000, piso: 6000 },
+            "SemiPremium": { precio: 35000, piso: 9000 },
+            "Premium": { precio: 60000, piso: 12000 },
+            "Elite": { precio: 110000, piso: 20000 }
+        },
+        modelos: {
+            "spark": { base: 13000, liquidez: 1.05 }, "celta": { base: 12500, liquidez: 1.05 }, "corsa": { base: 13000, liquidez: 1.05 },
+            "classic": { base: 12500, liquidez: 1.05 }, "onix": { base: 19500, liquidez: 1.10 }, "prisma": { base: 18000, liquidez: 1.10 },
+            "joy": { base: 16000, liquidez: 1.10 }, "tracker": { base: 26000, liquidez: 1.05 }, "cruze": { base: 30000, liquidez: 1.00 },
+            "montana": { base: 21000, liquidez: 1.05 }, "s10": { base: 45000, liquidez: 1.05 }, "equinox": { base: 38000, liquidez: 0.90 },
+            "up": { base: 17000, liquidez: 1.15 }, "gol": { base: 17500, liquidez: 1.15 }, "polo": { base: 22000, liquidez: 1.10 },
+            "virtus": { base: 24000, liquidez: 1.05 }, "nivus": { base: 28000, liquidez: 1.10 }, "t-cross": { base: 30000, liquidez: 1.05 },
+            "taos": { base: 38000, liquidez: 1.00 }, "tiguan": { base: 48000, liquidez: 0.90 }, "vento": { base: 35000, liquidez: 0.90 },
+            "amarok": { base: 52000, liquidez: 1.05 }, "saveiro": { base: 19500, liquidez: 1.10 },
+            "alto": { base: 13000, liquidez: 1.10 }, "celerio": { base: 15500, liquidez: 1.10 }, "swift": { base: 20000, liquidez: 1.10 },
+            "baleno": { base: 22000, liquidez: 1.05 }, "dzire": { base: 18500, liquidez: 1.05 }, "ignis": { base: 20500, liquidez: 1.05 },
+            "vitara": { base: 29000, liquidez: 1.00 },
+            "mobi": { base: 14500, liquidez: 1.05 }, "uno": { base: 15000, liquidez: 1.05 }, "argo": { base: 19000, liquidez: 1.05 },
+            "cronos": { base: 20000, liquidez: 1.05 }, "pulse": { base: 25000, liquidez: 1.05 }, "fastback": { base: 30000, liquidez: 1.00 },
+            "strada": { base: 20000, liquidez: 1.10 }, "toro": { base: 32000, liquidez: 1.05 }, "fiorino": { base: 17000, liquidez: 1.10 },
+            "206": { base: 13500, liquidez: 1.00 }, "207": { base: 14500, liquidez: 1.00 }, "208": { base: 22000, liquidez: 1.00 },
+            "308": { base: 26000, liquidez: 0.90 }, "2008": { base: 28000, liquidez: 0.95 }, "3008": { base: 42000, liquidez: 0.85 },
+            "partner": { base: 18000, liquidez: 1.05 },
+            "kwid": { base: 14500, liquidez: 1.05 }, "clio": { base: 15000, liquidez: 1.00 }, "sandero": { base: 18500, liquidez: 1.05 },
+            "stepway": { base: 21000, liquidez: 1.00 }, "logan": { base: 17500, liquidez: 1.05 }, "duster": { base: 25000, liquidez: 1.00 },
+            "oroch": { base: 25000, liquidez: 1.05 }, "kangoo": { base: 20000, liquidez: 1.05 },
+            "etios": { base: 19500, liquidez: 1.15 }, "yaris": { base: 24000, liquidez: 1.10 }, "corolla cross": { base: 38000, liquidez: 1.10 },
+            "corolla": { base: 32000, liquidez: 1.15 }, "hilux": { base: 55000, liquidez: 1.20 }, "sw4": { base: 75000, liquidez: 1.05 },
+            "rav4": { base: 52000, liquidez: 1.00 },
+            "march": { base: 16500, liquidez: 1.05 }, "versa": { base: 23000, liquidez: 1.05 }, "sentra": { base: 32000, liquidez: 0.95 },
+            "kicks": { base: 28000, liquidez: 1.05 }, "frontier": { base: 48000, liquidez: 1.00 },
+            "seagull": { base: 21000, liquidez: 1.05 }, "dolphin": { base: 31000, liquidez: 1.00 }, "yuan plus": { base: 40000, liquidez: 1.00 },
+            "song plus": { base: 48000, liquidez: 1.00 },
+            "a1": { base: 32000, liquidez: 0.90 }, "a3": { base: 42000, liquidez: 0.90 }, "a4": { base: 58000, liquidez: 0.80 },
+            "serie 1": { base: 40000, liquidez: 0.90 }, "serie 3": { base: 60000, liquidez: 0.80 }, "x1": { base: 48000, liquidez: 0.85 }
+        },
+        versiones: [
+            { id: ["ls", "joy", "std", "base", "authentic", "like", "gl", "pop"], factor: 0.90 }, 
+            { id: ["lt", "trend", "active", "feel", "xl", "zen", "evolution", "drive"], factor: 1.0 }, 
+            { id: ["ltz", "highline", "premier", "exclusive", "shine", "glx", "xle", "allure", "intense", "volcano", "freedom", "ambition"], factor: 1.10 }, 
+            { id: ["rs", "gti", "gts", "sport", "n-line", "gr-sport", "gt", "v6", "s-line", "m-sport", "r-line"], factor: 1.15 } 
+        ],
+        motores: [
+            { id: ["1.2"], marcas: ["Peugeot", "Citroën"], factor: 0.85 },
+            { id: ["1.6"], marcas: ["Peugeot", "Citroën"], factor: 1.00 },
+            { id: ["tsi", "tfsi", "200 tsi", "250 tsi", "up! tsi"], marcas: ["Volkswagen", "Audi"], factor: 1.05 },
+            { id: ["hybrid", "hibrido", "dm-i", "hev"], marcas: ["Toyota", "BYD", "Hyundai", "Ford"], factor: 1.08 },
+            { id: ["ev", "electrico"], marcas: ["BYD", "JAC", "Nissan"], factor: 1.05 },
+            { id: ["tdi", "diesel"], marcas: ["Volkswagen", "Toyota", "Chevrolet", "Ford"], factor: 1.10 }
+        ]
+    };
+
+    function mostrarResultado() {
+        const marcaStr = document.getElementById("tasMarca").value.trim();
+        const modeloStr = document.getElementById("tasModelo").value.toLowerCase().trim();
+        const anioInput = document.getElementById("tasAnio").value;
+        const kmInput = document.getElementById("tasKm").value;
+        const ANIO_ACTUAL = 2026;
+
+        const AJUSTE_MERCADO_REAL = 0.88; 
+
+        const anio = parseInt(anioInput);
+        const km = parseInt(kmInput);
+
+        if (!marcaStr || !modeloStr) return;
+
+        const marcaKey = Object.keys(MERCADO_UY.marcas).find(k => k.toLowerCase() === marcaStr.toLowerCase()) || null;
+        const confMarca = marcaKey ? MERCADO_UY.marcas[marcaKey] : { retencion: 0.85, repuestos: 0.95, seg: "Generalista" };
+        const marcaOficial = marcaKey || marcaStr; 
+
+        let valorBase0km = MERCADO_UY.segmentosBase[confMarca.seg].precio;
+        let factorLiquidez = 1.0;
+        let modeloReconocido = false;
+
+        for (const key of Object.keys(MERCADO_UY.modelos)) {
+            if (new RegExp(`\\b${key}\\b`, 'i').test(modeloStr)) {
+                valorBase0km = MERCADO_UY.modelos[key].base;
+                factorLiquidez = MERCADO_UY.modelos[key].liquidez;
+                modeloReconocido = true;
+                break;
+            }
+        }
+
+        let nivelConfianza = modeloReconocido && marcaKey ? "Alta" : "Baja";
+
+        let factorVersion = 1.0;
+        for (const ver of MERCADO_UY.versiones) {
+            if (ver.id.some(keyword => new RegExp(`\\b${keyword}\\b`, 'i').test(modeloStr))) {
+                factorVersion = Math.max(factorVersion, ver.factor);
+            }
+        }
+
+        let factorMotor = 1.0;
+        if (marcaKey) {
+            for (const mot of MERCADO_UY.motores) {
+                if (mot.marcas.includes(marcaKey) && mot.id.some(keyword => new RegExp(`\\b${keyword}\\b`, 'i').test(modeloStr))) {
+                    factorMotor = mot.factor; break;
+                }
+            }
+        }
+
+        let multiplicadorTotal = factorVersion * factorMotor * factorLiquidez * confMarca.repuestos;
+        
+        if (multiplicadorTotal > 1.20) multiplicadorTotal = 1.20;
+        if (multiplicadorTotal < 0.70) multiplicadorTotal = 0.70;
+
+        let precio0kmCalculado = valorBase0km * multiplicadorTotal * AJUSTE_MERCADO_REAL;
+        const antiguedad = Math.max(0, ANIO_ACTUAL - anio);
+        let factorAntiguedad = 1.0;
+
+        if (antiguedad === 0) {
+            factorAntiguedad = 0.90; 
+        } else {
+            factorAntiguedad = Math.pow(confMarca.retencion, antiguedad);
+            if (antiguedad > 6) {
+                factorAntiguedad = Math.pow(confMarca.retencion, 6) * Math.pow(0.96, antiguedad - 6);
+            }
+        }
+
+        let precioCalculado = precio0kmCalculado * factorAntiguedad;
+
+        const kmAnualesPromedio = 14000;
+        const kmEsperados = antiguedad * kmAnualesPromedio;
+        
+        if (antiguedad > 1) { 
+            if (km < kmEsperados * 0.4 && km > 0) precioCalculado *= 1.06; 
+            else if (km > kmEsperados * 1.5 || km > 200000) precioCalculado *= 0.82; 
+        }
+
+        let insight = "";
+        if (factorLiquidez >= 1.10) insight = "Alta demanda de mercado.";
+        else if (factorLiquidez <= 0.95) insight = "Demanda moderada de mercado.";
+        if (km < kmEsperados * 0.5 && antiguedad > 2) insight += " Kilometraje favorece el valor.";
+
+        const miPiso = MERCADO_UY.segmentosBase[confMarca.seg].piso;
+        if (precioCalculado < miPiso) precioCalculado = miPiso;
+
+        let techoMaximo = precio0kmCalculado * 1.02; 
+        if (precioCalculado > techoMaximo) precioCalculado = techoMaximo;
+        
+        let min = Math.round((precioCalculado * 0.95) / 100) * 100;
+        let max = Math.round((precioCalculado * 1.05) / 100) * 100;
+
+        document.getElementById("pantallaCarga").style.display = "none";
+        document.getElementById("pantallaResultado").style.display = "block";
+        document.getElementById("resultadoRango").innerHTML = `<span>USD ${min.toLocaleString('es-UY')}</span> - <span>USD ${max.toLocaleString('es-UY')}</span>`;
+
+        document.getElementById("nivelConfianzaHTML").innerText = `Precisión del algoritmo: ${nivelConfianza}`;
+        document.getElementById("insightHTML").innerText = insight;
+
+        const nombreAutoMostrar = `${marcaOficial} ${document.getElementById("tasModelo").value.trim()}`.toUpperCase();
+        const mensajeWa = `Hola! Coticé mi ${nombreAutoMostrar} (${anio}, ${km}km). El rango estimado dio USD ${min} - ${max}. Quiero coordinar para venderlo.`;
+        document.getElementById("btnWhatsappTasacion").href = `https://wa.me/59892984251?text=${encodeURIComponent(mensajeWa)}`;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros | Piñeyro Autos</title>
+    <link rel="icon" type="image/png" href="logo.jpeg"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --red: #ef233c; 
+            --red-hover: #d90429;
+            --bg-dark: #0a0a0a; 
+            --dark-card: #141414;
+            --light-text: #f5f5f7;
+            --muted-text: #86868b;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg-dark); 
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 5%; 
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar img { height: 70px; }
+        .nav-links a { 
+            margin-left: 25px; 
+            text-decoration: none; 
+            color: white; 
+            font-weight: 600; 
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--red); }
+
+        /* --- HERO --- */
+        .about-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+                        url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80') center/cover;
+            padding: 120px 5%;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .about-hero h1 { 
+            font-size: clamp(32px, 5vw, 56px); 
+            font-weight: 800; 
+            margin-bottom: 20px; 
+            letter-spacing: -1px;
+        }
+        .about-hero p { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            font-size: 20px; 
+            color: var(--muted-text); 
+            font-weight: 400; 
+        }
+
+        /* --- CONTENIDO --- */
+        .content-section {
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 25px;
+        }
+        .content-section h2 {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .content-section h2::before {
+            content: '';
+            width: 4px;
+            height: 35px;
+            background: var(--red);
+            display: inline-block;
+        }
+
+        .highlight-box {
+            background: var(--dark-card);
+            padding: 50px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .highlight-box h3 { 
+            color: var(--red); 
+            font-size: 24px; 
+            margin-top: 0; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- VALORES --- */
+        .grid-valores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .valor-card {
+            padding: 40px;
+            background: var(--dark-card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+        .valor-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--red);
+        }
+        .valor-card h4 { color: white; margin-top: 0; font-size: 20px; font-weight: 700; }
+        .valor-card p { color: var(--muted-text); font-size: 15px; margin-bottom: 0; }
+
+        /* --- CTA FINAL --- */
+        .cta-box {
+            text-align: center; 
+            margin-top: 100px; 
+            padding: 60px;
+            background: linear-gradient(145deg, #111, #050505);
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+        .btn-main {
+            background: var(--red); 
+            color: white; 
+            padding: 20px 50px; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .btn-main:hover {
+            background: var(--red-hover);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(239, 35, 60, 0.4);
+        }
+
+        /* --- FOOTER --- */
+        .footer-premium {
+            background: #000;
+            padding: 80px 5% 40px;
+            margin-top: 120px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .footer-links { margin-bottom: 40px; }
+        .footer-links a { 
+            color: var(--muted-text); 
+            text-decoration: none; 
+            margin: 0 20px; 
+            font-size: 14px; 
+            transition: 0.3s;
+        }
+        .footer-links a:hover { color: white; }
+        .copy { 
+            font-size: 13px; 
+            color: #444; 
+            padding-top: 40px; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+        }
+
+        @media (max-width: 768px) {
+            .about-hero { padding: 80px 5%; }
+            .highlight-box { padding: 30px; }
+            .cta-box { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="inicio.html"><img src="logo1.png" alt="Piñeyro Autos"></a>
+    <div class="nav-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="https://wa.me/59892984251">Contacto</a>
+    </div>
+</nav>
+
+<header class="about-hero">
+    <h1>Excelencia en autos seleccionados</h1>
+    <p>En el mercado uruguayo, la confianza no se negocia. En Piñeyro Autos gestionamos tu capital con la seriedad que merece.</p>
+</header>
+
+<main class="content-section">
+    <h2>Nuestra Misión</h2>
+    <p style="font-size: 18px; color: var(--muted-text);">
+        Piñeyro Autos nació con un objetivo claro: **que el dueño de un vehículo no tenga que malvender su patrimonio por falta de tiempo o herramientas**. 
+        Vender un auto de forma particular puede ser un proceso lento y arriesgado; entregarlo en una automotora convencional suele implicar una pérdida económica importante. Nosotros eliminamos esa brecha.
+    </p>
+
+    <div class="highlight-box">
+        <h3>Gestión Profesional</h3>
+        <p style="font-size: 18px; margin-bottom: 0;">
+            No somos simples intermediarios, somos **gestores de activos**. Nos encargamos de todo el ciclo: peritaje técnico, fotografía de alta calidad, pauta publicitaria y la negociación final. Nuestro propósito es que recibas el valor real de mercado por tu inversión, sin moverte de tu casa.
+        </p>
+    </div>
+
+    <h2>Mercado Local, Visión Global</h2>
+    <p style="font-size: 18px; color: var(--muted-text);">
+        Operamos desde Pando para todo el país. Entendemos qué busca el comprador uruguayo y posicionamos cada unidad de forma estratégica. Al confiar en nosotros, tu vehículo se destaca en un mercado saturado, filtrando curiosos y conectando directamente con interesados reales y calificados.
+    </p>
+
+    <div class="grid-valores">
+        <div class="valor-card">
+            <h4>Seguridad Garantizada</h4>
+            <p>Filtramos cada consulta y coordinamos encuentros en entornos seguros. Tu tranquilidad es nuestra prioridad absoluta.</p>
+        </div>
+        <div class="valor-card">
+            <h4>Rentabilidad Real</h4>
+            <p>Maximizamos el valor de "mano" que recibís. Optimizamos cada detalle para que tu capital no se diluya en comisiones excesivas.</p>
+        </div>
+        <div class="valor-card">
+            <h4>Transparencia Total</h4>
+            <p>Documentación, títulos y estado mecánico verificados. Sin sorpresas, solo negocios claros y profesionales.</p>
+        </div>
+    </div>
+
+    <div class="cta-box">
+        <h3 style="font-size: 28px; margin-bottom: 15px;">¿Querés vender tu auto con expertos?</h3>
+        <p style="color: var(--muted-text); margin-bottom: 35px;">Sumate a la nueva forma de vender autos seleccionados en Uruguay.</p>
+        <a href="https://wa.me/59892984251" class="btn-main">Iniciar Consultoría</a>
+    </div>
+</main>
+
+<footer class="footer-premium">
+    <div class="footer-links">
+        <a href="inicio.html">Inicio</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="venta.html">Vender mi Auto</a>
+        <a href="https://wa.me/59892984251">WhatsApp</a>
+    </div>
+    <div class="copy">
+        &copy; 2026 Piñeyro Autos - Pando, Uruguay. <br>
+        <span style="letter-spacing: 2px; color: #666; font-size: 11px; text-transform: uppercase; display: block; margin-top: 10px;">Seriedad • Transparencia • Resultados</span>
+    </div>
+</footer>
+
+</body>
+</html>
